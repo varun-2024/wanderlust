@@ -6,8 +6,6 @@ const port = 8080;
 const mongoose = require("mongoose");
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
-const Schema = mongoose.Schema;
-
 // Require Path
 const path = require("path");
 
