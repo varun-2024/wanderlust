@@ -5,7 +5,8 @@ const port = 8080;
 //Require Mongoose
 const mongoose = require("mongoose");
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
-
+//Model
+const Listing = require("./models/listing.js");
 // Require Path
 const path = require("path");
 
@@ -35,6 +36,12 @@ async function main() {
 //Root Get Path
 app.get("/", (req, res) => {
   res.send("Welcome to Home Page");
+});
+
+// Tests Listing
+app.get("/test", (req, res) => {
+  let sampleListing = new Listing({});
+  res.send("test");
 });
 
 //Server Listening
