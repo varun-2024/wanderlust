@@ -39,9 +39,18 @@ app.get("/", (req, res) => {
 });
 
 // Tests Listing
-app.get("/test", (req, res) => {
-  let sampleListing = new Listing({});
-  res.send("test");
+app.get("/testListing", async (req, res) => {
+  let sampleListing = new Listing({
+    title: "My New Villa",
+    description: "By the Beach",
+    price: 1200,
+    location: "Miami, Florida",
+    country: "USA",
+  });
+  await sampleListing.save();
+  console.log("Sample was Saved");
+
+  res.send("Test Sucessful");
 });
 
 //Server Listening
