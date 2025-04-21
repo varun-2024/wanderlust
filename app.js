@@ -39,7 +39,7 @@ app.get("/", (req, res) => {
 });
 
 // Tests Listing
-app.get("/testListing", async (req, res) => {
+/* app.get("/testListing", async (req, res) => {
   let sampleListing = new Listing({
     title: "My New Villa",
     description: "By the Beach",
@@ -51,6 +51,12 @@ app.get("/testListing", async (req, res) => {
   console.log("Sample was Saved");
 
   res.send("Test Sucessful");
+}); */
+
+//Listing Index Route
+app.get("/listings", async (req, res) => {
+  const allListings = await Listing.find({});
+  res.render("listings/index.ejs", { allListings });
 });
 
 //Server Listening
