@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Show Listing</title>
+  </head>
+  <body>
+    <h1>WanderLust</h1>
+    <h3>Listing Details</h3>
+    <h4>Title: <%= showListing.title %></h4>
+    <p>Description :<%= showListing.description %></p>
+    <p>Price: £<%= showListing.price.toLocaleString("en-GB") %></p>
+    <p>Location: <%= showListing.location %></p>
+    <p>Country: <%= showListing.country %></p>
+    <button onclick="window.history.back()">Go Back</button>
+  </body>
+</html>

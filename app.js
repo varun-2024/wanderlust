@@ -59,10 +59,23 @@ app.get("/listings", async (req, res) => {
   res.render("listings/index.ejs", { allListings });
 });
 
+//Listing New Route
+app.get("/listings/new", (req, res) => {
+  res.render("listings/new.ejs");
+});
+
+//Listing Create Route
+app.post("/listings", async (req, res) => {
+  const newListing = new Listing(req.body.listing);
+  await newListing.save();
+  console.log("New Listing Created:", newListing);
+  res.redirect("/listings");
+});
+
 //Listing Show Route
 app.get("/listings/:id", async (req, res) => {
   const { id } = req.params;
-  const showListing = await Listing.findById({ id });
+  const showListing = await Listing.findById(id);
   res.render("listings/show.ejs", { showListing });
 });
 
