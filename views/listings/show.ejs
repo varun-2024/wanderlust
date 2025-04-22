@@ -13,10 +13,15 @@
     <p>Price: £<%= showListing.price.toLocaleString("en-GB") %></p>
     <p>Location: <%= showListing.location %></p>
     <p>Country: <%= showListing.country %></p>
-    <a href="/listings"><button type="button">Go Back</button></a>
-    <a href="/listings/<%= showListing.id %>/edit"
-      ><button type="button">Edit Listing</button></a
-    >
+    <div class="button-container">
+      <a href="/listings"><button type="button">Go Back</button></a>
+      <a href="/listings/<%= showListing.id %>/edit"
+        ><button type="button">Edit Listing</button></a
+      >
+      <form action="/listings/<%=showListing.id%>?_method=DELETE" method="POST">
+        <button type="submit">Delete Listing</button>
+      </form>
+    </div>
     <footer>
       <p>&copy; 2025 Wanderlust. All rights reserved.</p>
     </footer>

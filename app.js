@@ -89,12 +89,26 @@ app.get("/listings/:id/edit", async (req, res) => {
 // Edit Put Request Route
 app.put("/listings/:id", async (req, res) => {
   const { id } = req.params;
-  const updatedListing = await Listing.findByIdAndUpdate(id, req.body.listing, {
-    new: true,
-  });
+  console.log(req.body.listing);
+  const updatedListing = await Listing.findByIdAndUpdate(
+    id,
+    { ...req.body.listing },
+    {
+      new: true,
+    }
+  );
   console.log("Updated Listing:", updatedListing);
   res.redirect(`/listings/${id}`);
 });
+
+// Delete Request Route
+app.delete("/listings/:id", async (req, res) => {
+  const { id } = req.params;
+  await Listing.findByIdAndUpdate(id, { deleted: true });
+  console.log("Deleted Listing:", id);
+  res.redirect("/listings");
+});
+
 //Server Listening
 app.listen(port, () => {
   console.log("Server Listening on port 8080");
