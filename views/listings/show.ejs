@@ -13,6 +13,12 @@
     <p>Price: £<%= showListing.price.toLocaleString("en-GB") %></p>
     <p>Location: <%= showListing.location %></p>
     <p>Country: <%= showListing.country %></p>
-    <button onclick="window.history.back()">Go Back</button>
+    <a href="/listings"><button type="button">Go Back</button></a>
+    <a href="/listings/<%= showListing.id %>/edit"
+      ><button type="button">Edit Listing</button></a
+    >
+    <footer>
+      <p>&copy; 2025 Wanderlust. All rights reserved.</p>
+    </footer>
   </body>
 </html>

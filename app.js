@@ -79,6 +79,22 @@ app.get("/listings/:id", async (req, res) => {
   res.render("listings/show.ejs", { showListing });
 });
 
+// Edit Get Request Route
+app.get("/listings/:id/edit", async (req, res) => {
+  const { id } = req.params;
+  const editListing = await Listing.findById(id);
+  res.render("listings/edit.ejs", { editListing });
+});
+
+// Edit Put Request Route
+app.put("/listings/:id", async (req, res) => {
+  const { id } = req.params;
+  const updatedListing = await Listing.findByIdAndUpdate(id, req.body.listing, {
+    new: true,
+  });
+  console.log("Updated Listing:", updatedListing);
+  res.redirect(`/listings/${id}`);
+});
 //Server Listening
 app.listen(port, () => {
   console.log("Server Listening on port 8080");

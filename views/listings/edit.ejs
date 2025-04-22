@@ -3,66 +3,74 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Add New Listing</title>
+    <title>Edit Listing</title>
   </head>
   <body>
     <h1>WanderLust</h1>
-    <h3>Add Your Listing</h3>
-    <form action="/listings" method="POST">
+    <h3>Edit Your Listing</h3>
+    <form action="/listings/<%= editListing.id %>?_method=PUT" method="POST">
       <label for="title">Title</label>
+      <br />
       <input
         type="text"
         id="title"
         name="listing[title]"
-        placeholder="Enter Property Title"
+        value="<%= editListing.title %>"
       /><br /><br />
       <label for="description">Description</label>
-      <input
-        type="textarea"
+      <br />
+      <textarea
         id="description"
         name="listing[description]"
-        placeholder="Enter Description"
-        rows="10"
-        cols=" 25"
-      /><br /><br />
+        rows="5"
+        cols="100"
+      >
+<%= editListing.description %></textarea
+      ><br /><br />
       <label for="filename">Image name</label>
+      <br />
       <input
         type="text"
         id="filename"
         name="listing[image][filename]"
-        placeholder="Enter Image Name"
+        value="<%= editListing.image.filename %>"
       /><br /><br />
       <label for="url">Image URL</label>
+      <br />
       <input
         type="text"
         id="url"
         name="listing[image][url]"
-        placeholder="Enter Image URL"
+        value="<%= editListing.image.url %>"
       /><br /><br />
       <label for="price">Price</label>
+      <br />
       <input
         type="number"
         name="listing[price]"
         id="price"
-        placeholder="Enter Price"
+        value="<%= editListing.price %>"
       />
       <br /><br />
       <label for="location">Location</label>
+      <br />
       <input
         type="text"
         id="location"
         name="listing[location]"
-        placeholder="Enter Location"
+        value="<%= editListing.location %>"
       />
       <br /><br />
       <label for="country">Country</label>
+      <br />
       <input
         type="text"
         id="country"
         name="listing[country]"
-        placeholder="Enter Country"
+        value="<%= editListing.country %>"
       /><br /><br />
       <button type="submit">Submit Listing</button>
+      <a href="/listings"><button type="button">Cancel</button></a>
     </form>
     <footer>
       <p>&copy; 2025 Wanderlust. All rights reserved.</p>
