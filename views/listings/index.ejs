@@ -8,5 +8,13 @@
   <body>
     <h1>Wanderlust</h1>
     <h3>All Listings</h3>
+    <ul>
+      <% for(let listings of allListings) {%>
+      <li><a href="<%=listings.id%>"><%=listings.title%></a></li>
+      <% } %>
+    </ul>
+    <footer>
+      <p>&copy; 2053 Wanderlust. All rights reserved.</p>
+    </footer>
   </body>
 </html>
