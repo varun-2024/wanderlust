@@ -1,0 +1,64 @@
+<% layout("/layouts/boilerplate.ejs") %>
+<body>
+  <h1>WanderLust</h1>
+  <h3>Edit Your Listing</h3>
+  <form action="/listings/<%= editListing.id %>?_method=PUT" method="POST">
+    <label for="title">Title</label>
+    <br />
+    <input
+      type="text"
+      id="title"
+      name="listing[title]"
+      value="<%= editListing.title %>"
+    /><br /><br />
+    <label for="description">Description</label>
+    <br />
+    <textarea id="description" name="listing[description]" rows="5" cols="100">
+<%= editListing.description %></textarea
+    ><br /><br />
+    <label for="filename">Image name</label>
+    <br />
+    <input
+      type="text"
+      id="filename"
+      name="listing[image][filename]"
+      value="<%= editListing.image.filename %>"
+    /><br /><br />
+    <label for="url">Image URL</label>
+    <br />
+    <input
+      type="text"
+      id="url"
+      name="listing[image][url]"
+      value="<%= editListing.image.url %>"
+    /><br /><br />
+    <label for="price">Price</label>
+    <br />
+    <input
+      type="number"
+      name="listing[price]"
+      id="price"
+      value="<%= editListing.price %>"
+    />
+    <br /><br />
+    <label for="location">Location</label>
+    <br />
+    <input
+      type="text"
+      id="location"
+      name="listing[location]"
+      value="<%= editListing.location %>"
+    />
+    <br /><br />
+    <label for="country">Country</label>
+    <br />
+    <input
+      type="text"
+      id="country"
+      name="listing[country]"
+      value="<%= editListing.country %>"
+    /><br /><br />
+    <button type="submit">Submit Listing</button>
+    <a href="/listings"><button type="button">Cancel</button></a>
+  </form>
+</body>
