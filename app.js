@@ -10,7 +10,10 @@ const Listing = require("./models/listing.js");
 // Require Path
 const path = require("path");
 
-// Require EJS
+// Require EJS Mate
+const ejsMate = require("ejs-mate");
+app.engine("ejs", ejsMate);
+// Require/Set EJS
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
@@ -104,7 +107,7 @@ app.put("/listings/:id", async (req, res) => {
 // Delete Request Route
 app.delete("/listings/:id", async (req, res) => {
   const { id } = req.params;
-  await Listing.findByIdAndUpdate(id, { deleted: true });
+  await Listing.findByIdAndDelete(id, { deleted: true });
   console.log("Deleted Listing:", id);
   res.redirect("/listings");
 });
