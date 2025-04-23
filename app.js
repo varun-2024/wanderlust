@@ -19,6 +19,15 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 
+// Bootsrap
+app.use("/css", express.static(__dirname + "/node_modules/bootstrap/dist/css"));
+app.use("/js", express.static(__dirname + "/node_modules/bootstrap/dist/js"));
+app.use("/js", express.static(__dirname + "/node_modules/jquery/dist")); // If you need jQuery
+app.use(
+  "/js",
+  express.static(__dirname + "/node_modules/@popperjs/core/dist/umd")
+); // If you need Popper.js
+
 // Method Override Middleware
 const methodOverride = require("method-override");
 app.use(methodOverride("_method"));

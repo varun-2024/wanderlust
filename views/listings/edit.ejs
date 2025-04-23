@@ -1,6 +1,5 @@
 <% layout("/layouts/boilerplate.ejs") %>
 <body>
-  <h1>WanderLust</h1>
   <h3>Edit Your Listing</h3>
   <form action="/listings/<%= editListing.id %>?_method=PUT" method="POST">
     <label for="title">Title</label>

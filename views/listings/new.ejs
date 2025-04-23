@@ -1,9 +1,9 @@
 <% layout("/layouts/boilerplate.ejs") %>
 <body>
-  <h1>WanderLust</h1>
   <h3>Add Your Listing</h3>
   <form action="/listings" method="POST">
     <label for="title">Title</label>
+    <br />
     <input
       type="text"
       id="title"
@@ -11,6 +11,7 @@
       placeholder="Enter Property Title"
     /><br /><br />
     <label for="description">Description</label>
+    <br />
     <input
       type="textarea"
       id="description"
@@ -20,6 +21,7 @@
       cols=" 25"
     /><br /><br />
     <label for="filename">Image name</label>
+    <br />
     <input
       type="text"
       id="filename"
@@ -27,6 +29,7 @@
       placeholder="Enter Image Name"
     /><br /><br />
     <label for="url">Image URL</label>
+    <br />
     <input
       type="text"
       id="url"
@@ -34,6 +37,7 @@
       placeholder="Enter Image URL"
     /><br /><br />
     <label for="price">Price</label>
+    <br />
     <input
       type="number"
       name="listing[price]"
@@ -42,6 +46,7 @@
     />
     <br /><br />
     <label for="location">Location</label>
+    <br />
     <input
       type="text"
       id="location"
@@ -50,6 +55,7 @@
     />
     <br /><br />
     <label for="country">Country</label>
+    <br />
     <input
       type="text"
       id="country"
@@ -57,5 +63,6 @@
       placeholder="Enter Country"
     /><br /><br />
     <button type="submit">Submit Listing</button>
+    <a href="/listings"><button type="button">Back to Listings</button></a>
   </form>
 </body>
