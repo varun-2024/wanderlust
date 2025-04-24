@@ -1,63 +1,100 @@
 <% layout("/layouts/boilerplate.ejs") %>
 <body>
   <h3>Edit Your Listing</h3>
-  <form action="/listings/<%= editListing.id %>?_method=PUT" method="POST">
-    <label for="title">Title</label>
-    <br />
-    <input
-      type="text"
-      id="title"
-      name="listing[title]"
-      value="<%= editListing.title %>"
-    /><br /><br />
-    <label for="description">Description</label>
-    <br />
-    <textarea id="description" name="listing[description]" rows="5" cols="100">
+  <div class="col-8 mx-auto mt-3">
+    <form action="/listings/<%= editListing.id %>?_method=PUT" method="POST">
+      <div>
+        <label for="title" class="form-label">Title</label>
+        <br />
+        <input
+          type="text"
+          id="title"
+          name="listing[title]"
+          value="<%= editListing.title %>"
+          class="form-control"
+        />
+      </div>
+      <br /><br />
+      <div>
+        <label for="description" class="form-label">Description</label>
+        <br />
+        <textarea
+          id="description"
+          name="listing[description]"
+          rows="5"
+          cols="100"
+          class="form-control"
+        >
 <%= editListing.description %></textarea
-    ><br /><br />
-    <label for="filename">Image name</label>
-    <br />
-    <input
-      type="text"
-      id="filename"
-      name="listing[image][filename]"
-      value="<%= editListing.image.filename %>"
-    /><br /><br />
-    <label for="url">Image URL</label>
-    <br />
-    <input
-      type="text"
-      id="url"
-      name="listing[image][url]"
-      value="<%= editListing.image.url %>"
-    /><br /><br />
-    <label for="price">Price</label>
-    <br />
-    <input
-      type="number"
-      name="listing[price]"
-      id="price"
-      value="<%= editListing.price %>"
-    />
-    <br /><br />
-    <label for="location">Location</label>
-    <br />
-    <input
-      type="text"
-      id="location"
-      name="listing[location]"
-      value="<%= editListing.location %>"
-    />
-    <br /><br />
-    <label for="country">Country</label>
-    <br />
-    <input
-      type="text"
-      id="country"
-      name="listing[country]"
-      value="<%= editListing.country %>"
-    /><br /><br />
-    <button type="submit">Submit Listing</button>
-    <a href="/listings"><button type="button">Cancel</button></a>
-  </form>
+        >
+      </div>
+      <br /><br />
+      <div>
+        <label for="filename" class="form-label">Image name</label>
+        <br />
+        <input
+          type="text"
+          id="filename"
+          name="listing[image][filename]"
+          value="<%= editListing.image.filename %>"
+          class="form-control"
+        />
+      </div>
+      <br /><br />
+      <div>
+        <label for="url" class="form-label">Image URL</label>
+        <br />
+        <input
+          type="text"
+          id="url"
+          name="listing[image][url]"
+          value="<%= editListing.image.url %>"
+          class="form-control"
+        />
+      </div>
+      <br /><br />
+      <div class="row">
+        <div class="col-md-6 ml-3 mr-3 p-3">
+          <label for="price" class="form-label">Price</label>
+          <br />
+          <input
+            type="number"
+            name="listing[price]"
+            id="price"
+            value="<%= editListing.price %>"
+            class="form-control"
+          />
+        </div>
+        <br /><br />
+        <div class="col-md-6 ml-3 mr-3 p-3">
+          <label for="location" class="form-label">Location</label>
+          <br />
+          <input
+            type="text"
+            id="location"
+            name="listing[location]"
+            value="<%= editListing.location %>"
+            class="form-control"
+          />
+        </div>
+      </div>
+      <br /><br />
+      <div>
+        <label for="country" class="form-label">Country</label>
+        <br />
+        <input
+          type="text"
+          id="country"
+          name="listing[country]"
+          value="<%= editListing.country %>"
+          class="form-control"
+        />
+      </div>
+      <br /><br />
+      <button type="submit" class="btn btn-outline-dark">Submit Listing</button>
+      <a href="/listings"
+        ><button type="button" class="btn btn-outline-dark">Cancel</button></a
+      >
+    </form>
+  </div>
 </body>

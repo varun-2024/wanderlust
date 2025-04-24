@@ -1,18 +1,24 @@
 <% layout("/layouts/boilerplate.ejs") %>
 <body>
-  <h3>Listing Details</h3>
-  <h4>Title: <%= showListing.title %></h4>
-  <p>Description :<%= showListing.description %></p>
-  <p>Price: £<%= showListing.price.toLocaleString("en-GB") %></p>
-  <p>Location: <%= showListing.location %></p>
-  <p>Country: <%= showListing.country %></p>
+  <div class="show-container">
+    <h3>Listing Details</h3>
+    <h4>Title: <%= showListing.title %></h4>
+    <p>Description: <%= showListing.description %></p>
+    <p>Price: £<%= showListing.price.toLocaleString("en-GB") %></p>
+    <p>Location: <%= showListing.location %></p>
+    <p>Country: <%= showListing.country %></p>
+  </div>
   <div class="button-container">
-    <a href="/listings"><button type="button">Go Back</button></a>
+    <a href="/listings"
+      ><button type="button" class="btn btn-outline-dark">Go Back</button></a
+    >
     <a href="/listings/<%= showListing.id %>/edit"
-      ><button type="button">Edit Listing</button></a
+      ><button type="button" class="btn btn-outline-dark">
+        Edit Listing
+      </button></a
     >
     <form action="/listings/<%=showListing.id%>?_method=DELETE" method="POST">
-      <button type="submit">Delete Listing</button>
+      <button type="submit" class="btn btn-outline-dark">Delete Listing</button>
     </form>
   </div>
 </body>
