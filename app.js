@@ -46,7 +46,7 @@ main()
 async function main() {
   await mongoose.connect(MONGO_URL);
 }
-
+// Middleware for logging request details
 app.use((req, res, next) => {
   req.time = new Date(Date.now()).toString();
   console.log(
