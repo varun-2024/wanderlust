@@ -10,6 +10,8 @@ const Listing = require("./models/listing.js");
 // Require Path
 const path = require("path");
 
+// Middlewares
+
 // Require EJS Mate
 const ejsMate = require("ejs-mate");
 app.engine("ejs", ejsMate);
@@ -44,6 +46,21 @@ main()
 async function main() {
   await mongoose.connect(MONGO_URL);
 }
+
+app.use((req, res, next) => {
+  req.time = new Date(Date.now()).toString();
+  console.log(
+    "Request Method: ",
+    req.method,
+    "\nHost Name : ",
+    req.hostname,
+    "\nRequest Path",
+    req.path,
+    "\nRequest Time :",
+    req.time
+  );
+  return next();
+});
 
 //Root Get Path
 app.get("/", (req, res) => {
