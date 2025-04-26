@@ -174,6 +174,17 @@ app.delete("/listings/:id", async (req, res) => {
   res.redirect("/listings");
 });
 
+// Test Route for Error
+app.get("/error", (req, res) => {
+  abc = abc;
+});
+
+// Error Handling Middleware
+app.use((err, req, res, next) => {
+  console.log("-----ERROR-----");
+  next();
+});
+
 // 404 Error Page
 app.use((req, res) => {
   res.status(404).send("Error Page Not Found " + req.path);
