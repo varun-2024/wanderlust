@@ -69,6 +69,35 @@ app.use((req, res, next) => {
   return next();
 });
 
+//Middleware for API Route
+/* app.use("/api", (req, res, next) => {
+  let { token } = req.query;
+  if (token === "giveaccess") {
+    console.log("Access Granted to API Route");
+    return next();
+  } else {
+    console.log("Access Denied to API Route");
+    res.status(403).send("Access Denied");
+  }
+}); */
+
+// Second Method of Writing
+const checkToken = (req, res, next) => {
+  let { token } = req.query;
+  if (token === "giveaccess") {
+    console.log("Access Granted to API Route");
+    return next();
+  } else {
+    console.log("Access Denied to API Route");
+    res.status(403).send("Access Denied");
+  }
+};
+
+// Api Route Test
+app.get("/api", checkToken, (req, res) => {
+  res.send("Data");
+});
+
 //Root Get Path
 app.get("/", (req, res) => {
   res.send("Welcome to Home Page");
