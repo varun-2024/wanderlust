@@ -46,6 +46,13 @@ main()
 async function main() {
   await mongoose.connect(MONGO_URL);
 }
+
+// Middleware for listings Path Testing
+app.use("/listings", (req, res, next) => {
+  console.log("Middleware for Listings Path Testing");
+  return next();
+});
+
 // Middleware for logging request details works for all routes and requests
 app.use((req, res, next) => {
   req.time = new Date(Date.now()).toString();
@@ -136,6 +143,11 @@ app.delete("/listings/:id", async (req, res) => {
   await Listing.findByIdAndDelete(id, { deleted: true });
   console.log("Deleted Listing:", id);
   res.redirect("/listings");
+});
+
+// 404 Error Page
+app.use((req, res) => {
+  res.status(404).send("Error Page Not Found " + req.path);
 });
 
 //Server Listening
