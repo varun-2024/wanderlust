@@ -10,6 +10,9 @@ const Listing = require("./models/listing.js");
 // Require Path
 const path = require("path");
 
+// EpressErrors Class
+const ExpressError = require("./expresserror.js");
+
 // Middlewares
 
 // Require EJS Mate
@@ -82,7 +85,7 @@ app.use((req, res, next) => {
 }); */
 
 // Second Method of Writing
-const checkToken = (req, res, next) => {
+/* const checkToken = (req, res, next) => {
   let { token } = req.query;
   if (token === "giveaccess") {
     console.log("Access Granted to API Route");
@@ -91,8 +94,15 @@ const checkToken = (req, res, next) => {
     console.log("Access Denied to API Route");
     res.status(403).send("Access Denied");
   }
+}; */
+const checkToken = (req, res, next) => {
+  let { token } = req.query;
+  if (token === "giveaccess") {
+    console.log("Access Granted to API Route");
+    return next();
+  }
+  throw new ExpressError(401, "Access Denied");
 };
-
 // Api Route Test
 app.get("/api", checkToken, (req, res) => {
   res.send("Data");
@@ -174,6 +184,11 @@ app.delete("/listings/:id", async (req, res) => {
   res.redirect("/listings");
 });
 
+// Admin Route Test
+app.get("/admin", (req, res) => {
+  throw new ExpressError(403, "Access to Admin is Forbidden");
+});
+
 // Test Route for Error
 app.get("/error", (req, res) => {
   abc = abc;
@@ -182,14 +197,16 @@ app.get("/error", (req, res) => {
 // Error Handling Middleware
 app.use((err, req, res, next) => {
   console.log("-----ERROR-----");
-  next();
+  let { status = 500, message = "Some Error Occurred" } = err;
+  //next(err);
+  res.status(status).send(`Status is : ${status}, Message is : ${message}`);
 });
 
 // 404 Error Page
-app.use((req, res) => {
+/* app.use((req, res) => {
   res.status(404).send("Error Page Not Found " + req.path);
 });
-
+ */
 //Server Listening
 app.listen(port, () => {
   console.log("Server Listening on port 8080");
