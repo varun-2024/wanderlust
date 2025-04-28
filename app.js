@@ -10,8 +10,10 @@ const Listing = require("./models/listing.js");
 // Require Path
 const path = require("path");
 
-// EpressErrors Class
-const ExpressError = require("./expresserror.js");
+// ExpressErrors Class
+const ExpressError = require("./utils/expresserror.js");
+// wrapAsync Middleware
+const asyncWrap = require("./utils/wrapAsync.js");
 
 // Middlewares
 
@@ -36,9 +38,6 @@ app.use(
 // Method Override Middleware
 const methodOverride = require("method-override");
 app.use(methodOverride("_method"));
-
-// wrapAsync Middleware
-const asyncWrap = require("./utils/wrapAsync.js");
 
 // Mongo DB Connection
 main()
@@ -112,12 +111,9 @@ const checkToken = (req, res, next) => {
 }); */
 
 //Root Get Path
-app.get(
-  "/",
-  asyncWrap(async (req, res) => {
-    res.send("Welcome to Home Page");
-  })
-);
+app.get("/", (req, res) => {
+  res.send("Welcome to Home Page");
+});
 
 // Tests Listing
 /* app.get("/testListing", async (req, res) => {
@@ -144,17 +140,17 @@ app.get(
 );
 
 //Listing New Route
-app.get(
-  "/listings/new",
-  asyncWrap(async (req, res) => {
-    res.render("listings/new.ejs");
-  })
-);
+app.get("/listings/new", (req, res, next) => {
+  res.render("listings/new.ejs");
+});
 
 //Listing Create Route
 app.post(
   "/listings",
   asyncWrap(async (req, res) => {
+    if (!req.body.listing) {
+      throw new ExpressError(400, "Send Valid data for Listing");
+    }
     const newListing = new Listing(req.body.listing);
     await newListing.save();
     console.log("New Listing Created:", newListing);
@@ -186,6 +182,9 @@ app.get(
 app.put(
   "/listings/:id",
   asyncWrap(async (req, res) => {
+    if (!req.body.listing) {
+      throw new ExpressError(400, "Send Valid data for Listing");
+    }
     const { id } = req.params;
     console.log(req.body.listing);
     const updatedListing = await Listing.findByIdAndUpdate(
@@ -221,30 +220,45 @@ app.delete(
   abc = abc;
 }); */
 
-// Mongoose Error Handling Middleware
+// 404 Error Page Second Method
+app.all(/.*/, (req, res, next) => {
+  next(new ExpressError(404, "Page Not Found"));
+});
+
+// Error Handling
 app.use((err, req, res, next) => {
-  console.log("-----MONGOOSE ERROR-----");
-  console.log(err.name);
-  err.status = 400;
-  err.message = "Invalid ID Format";
-  next(err);
+  let { status = 500, message = "Something Went Wrong" } = err;
+  res.status(status).send(message);
 });
 
 // Custom Error Handling Middleware
-app.use((err, req, res, next) => {
-  console.log("Something Went Wrong Custome Error");
-});
+/* app.use((err, req, res, next) => {
+  console.log("Error 1: Something Went Wrong Custome Error");
+  next(err);
+}); */
+
+// Mongoose Error Handling Middleware
+/* app.use((err, req, res, next) => {
+  console.log("Error 2: -----MONGOOSE ERROR-----");
+  console.log("Error 2 Name: ", err.name);
+  err.status = 400;
+  err.message = "Invalid ID Format";
+  next(err);
+}); */
 
 // Error Handling Middleware
-app.use((err, req, res, next) => {
-  console.log("-----ERROR-----");
+/* app.use((err, req, res, next) => {
+  console.log("Error 3: -----ERROR-----");
   if (res.headersSent) {
+    console.log("Headers sent Error: ", err);
     return next(err);
   }
-  let { status = 500, message = "Some Error Occurred" } = err;
-  //next(err);
+
+  let { status = 500, message = "Error 4: Some Error Occurred" } = err;
+  console.log(err);
+  //next(new ExpressError(err));
   res.status(status).send(`Status is : ${status}, Message is : ${message}`);
-});
+}); */
 
 // AsyncWrap Middleware
 /* function asyncWrap(fn) {
@@ -260,6 +274,7 @@ app.use((err, req, res, next) => {
   res.status(404).send("Error Page Not Found " + req.path);
 });
  */
+
 //Server Listening
 app.listen(port, () => {
   console.log("Server Listening on port 8080");

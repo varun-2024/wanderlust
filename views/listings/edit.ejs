@@ -17,7 +17,7 @@
           name="listing[title]"
           value="<%= editListing.title %>"
           class="form-control"
-          pattern="^[a-zA-Z]+$"
+          pattern="^[a-zA-Z ]+$"
           required
         />
         <div class="invalid-feedback">Please enter a title.</div>
@@ -97,7 +97,7 @@
             name="listing[location]"
             value="<%= editListing.location %>"
             class="form-control"
-            pattern="^[a-zA-Z]+$"
+            pattern="^[a-zA-Z ]+$"
             required
           />
           <div class="invalid-feedback">Please enter a valid Location.</div>
@@ -114,7 +114,7 @@
           name="listing[country]"
           value="<%= editListing.country %>"
           class="form-control"
-          pattern="^[a-zA-Z]+$"
+          pattern="^[a-zA-Z ]+$"
           required
         />
         <div class="invalid-feedback">Please enter a valid Country.</div>
