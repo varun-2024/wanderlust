@@ -101,17 +101,20 @@ const checkToken = (req, res, next) => {
     console.log("Access Granted to API Route");
     return next();
   }
-  throw new ExpressError(401, "Access Denied");
+  return next(new ExpressError(401, "Access Denied"));
 };
 // Api Route Test
-app.get("/api", checkToken, (req, res) => {
+/* app.get("/api", checkToken, (req, res) => {
   res.send("Data");
-});
+}); */
 
 //Root Get Path
-app.get("/", (req, res) => {
-  res.send("Welcome to Home Page");
-});
+app.get(
+  "/",
+  asyncWrap(async (req, res) => {
+    res.send("Welcome to Home Page");
+  })
+);
 
 // Tests Listing
 /* app.get("/testListing", async (req, res) => {
@@ -129,78 +132,120 @@ app.get("/", (req, res) => {
 }); */
 
 //Listing Index Route
-app.get("/listings", async (req, res) => {
-  const allListings = await Listing.find({});
-  res.render("listings/index.ejs", { allListings });
-});
+app.get(
+  "/listings",
+  asyncWrap(async (req, res) => {
+    const allListings = await Listing.find({});
+    res.render("listings/index.ejs", { allListings });
+  })
+);
 
 //Listing New Route
-app.get("/listings/new", (req, res) => {
-  res.render("listings/new.ejs");
-});
+app.get(
+  "/listings/new",
+  asyncWrap(async (req, res) => {
+    res.render("listings/new.ejs");
+  })
+);
 
 //Listing Create Route
-app.post("/listings", async (req, res) => {
-  const newListing = new Listing(req.body.listing);
-  await newListing.save();
-  console.log("New Listing Created:", newListing);
-  res.redirect("/listings");
-});
+app.post(
+  "/listings",
+  asyncWrap(async (req, res) => {
+    const newListing = new Listing(req.body.listing);
+    await newListing.save();
+    console.log("New Listing Created:", newListing);
+    res.redirect("/listings");
+  })
+);
 
 //Listing Show Route
-app.get("/listings/:id", async (req, res) => {
-  const { id } = req.params;
-  const showListing = await Listing.findById(id);
-  res.render("listings/show.ejs", { showListing });
-});
+app.get(
+  "/listings/:id",
+  asyncWrap(async (req, res) => {
+    const { id } = req.params;
+    const showListing = await Listing.findById(id);
+    res.render("listings/show.ejs", { showListing });
+  })
+);
 
 // Edit Get Request Route
-app.get("/listings/:id/edit", async (req, res) => {
-  const { id } = req.params;
-  const editListing = await Listing.findById(id);
-  res.render("listings/edit.ejs", { editListing });
-});
+app.get(
+  "/listings/:id/edit",
+  asyncWrap(async (req, res) => {
+    const { id } = req.params;
+    const editListing = await Listing.findById(id);
+    res.render("listings/edit.ejs", { editListing });
+  })
+);
 
 // Edit Put Request Route
-app.put("/listings/:id", async (req, res) => {
-  const { id } = req.params;
-  console.log(req.body.listing);
-  const updatedListing = await Listing.findByIdAndUpdate(
-    id,
-    { ...req.body.listing },
-    {
-      new: true,
-    }
-  );
-  console.log("Updated Listing:", updatedListing);
-  res.redirect(`/listings/${id}`);
-});
+app.put(
+  "/listings/:id",
+  asyncWrap(async (req, res) => {
+    const { id } = req.params;
+    console.log(req.body.listing);
+    const updatedListing = await Listing.findByIdAndUpdate(
+      id,
+      { ...req.body.listing },
+      {
+        new: true,
+      }
+    );
+    console.log("Updated Listing:", updatedListing);
+    res.redirect(`/listings/${id}`);
+  })
+);
 
 // Delete Request Route
-app.delete("/listings/:id", async (req, res) => {
-  const { id } = req.params;
-  await Listing.findByIdAndDelete(id, { deleted: true });
-  console.log("Deleted Listing:", id);
-  res.redirect("/listings");
-});
+app.delete(
+  "/listings/:id",
+  asyncWrap(async (req, res) => {
+    const { id } = req.params;
+    await Listing.findByIdAndDelete(id, { deleted: true });
+    console.log("Deleted Listing:", id);
+    res.redirect("/listings");
+  })
+);
 
 // Admin Route Test
-app.get("/admin", (req, res) => {
+/* app.get("/admin", (req, res) => {
   throw new ExpressError(403, "Access to Admin is Forbidden");
-});
+}); */
 
 // Test Route for Error
-app.get("/error", (req, res) => {
+/* app.get("/error", (req, res) => {
   abc = abc;
+}); */
+
+// Mongoose Error Handling Middleware
+app.use((err, req, res, next) => {
+  console.log("-----MONGOOSE ERROR-----");
+  console.log(err.name);
+  err.status = 400;
+  err.message = "Invalid ID Format";
+  next(err);
 });
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
   console.log("-----ERROR-----");
+  if (res.headersSent) {
+    return next(err);
+  }
   let { status = 500, message = "Some Error Occurred" } = err;
   //next(err);
   res.status(status).send(`Status is : ${status}, Message is : ${message}`);
 });
+
+// AsyncWrap Middleware
+function asyncWrap(fn) {
+  return function (req, res, next) {
+    fn(req, res, next).catch((err) => {
+      next(err);
+    });
+  };
+}
 
 // 404 Error Page
 /* app.use((req, res) => {
