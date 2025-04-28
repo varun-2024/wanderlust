@@ -39,6 +39,9 @@ app.use(
 const methodOverride = require("method-override");
 app.use(methodOverride("_method"));
 
+// Joi Schema
+const { listingSchema, validateListing } = require("./schema.js");
+
 // Mongo DB Connection
 main()
   .then(() => {
@@ -147,7 +150,9 @@ app.get("/listings/new", (req, res, next) => {
 //Listing Create Route
 app.post(
   "/listings",
+  validateListing,
   asyncWrap(async (req, res) => {
+    console.log("Post requesr Recieved");
     if (!req.body.listing) {
       throw new ExpressError(400, "Send Valid data for Listing");
     }
@@ -191,6 +196,7 @@ app.get(
 // Edit Put Request Route
 app.put(
   "/listings/:id",
+  validateListing,
   asyncWrap(async (req, res) => {
     if (!req.body.listing) {
       throw new ExpressError(400, "Send Valid data for Listing");

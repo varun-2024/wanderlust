@@ -1,14 +1,51 @@
 const Joi = require("joi");
-const listingSchema = Joi.object({
+const ExpressError = require("./utils/expresserror.js");
+
+module.exports.listingSchema = Joi.object({
   listing: Joi.object({
-    title: Joi.string().required(),
-    description: Joi.string().required(),
+    title: Joi.string().pattern(new RegExp("^[a-zA-Z0-9 ]+$")).required(),
+    description: Joi.string()
+      .pattern(new RegExp("^[a-zA-Z0-9\\s,.!?]+$"))
+      .required(),
     image: Joi.object({
       filename: Joi.string().required(),
-      url: Joi.string().required(),
+      url: Joi.string().uri().required(),
     }).required(),
-    price: Joi.number().required(),
-    location: Joi.string().required(),
-    country: Joi.string().required(),
+    price: Joi.number().integer().min(1).required(),
+    location: Joi.string().pattern(new RegExp("^[a-zA-Z ]+$")).required(),
+    country: Joi.string().pattern(new RegExp("^[a-zA-Z ]+$")).required(),
   }).required(),
 });
+
+module.exports.validateListing = (req, res, next) => {
+  const { error } = module.exports.listingSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map((el) => el.message).join(",");
+    return next(new ExpressError(400, msg));
+  }
+  next();
+};
+
+// schema.js
+// Make sure this path is correct
+
+/* listingSchema = Joi.object({
+  listing: Joi.object({
+    title: Joi.string().pattern(new RegExp("^[a-zA-Z\\s-]+$")).required(), // Changed regex for title
+    description: Joi.string()
+      .pattern(new RegExp("^[a-zA-Z0-9\\s,.!?\\-]+$")) // Changed regex for description
+      .required(),
+    image: Joi.object({
+      filename: Joi.string().required(),
+      url: Joi.string().uri().required(),
+    }).required(),
+    price: Joi.number().integer().min(1).required(), // Corrected .intiger() to .integer()
+    location: Joi.string().pattern(new RegExp("^[a-zA-Z\\s-]+$")).required(), // Changed regex for location
+    country: Joi.string().pattern(new RegExp("^[a-zA-Z\\s-]+$")).required(), // Changed regex for country
+  }).required(),
+}); */
+
+/* let result = this.listingSchema.validate(req.body);
+if (result.error) {
+  throw new ExpressError(400, result.error);
+} */

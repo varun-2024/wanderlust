@@ -12,7 +12,7 @@
           name="listing[title]"
           placeholder="Enter Property Title"
           class="form-control"
-          pattern="^[a-zA-Z]+$"
+          pattern="^[a-zA-Z0-9 ]+$"
           required
         />
         <div class="invalid-feedback">Please enter a title.</div>
@@ -28,7 +28,7 @@
           placeholder="Enter Description"
           class="form-control"
           required
-          pattern="^[a-zA-Z0-9\s,.!?]+$"
+          pattern="^[a-zA-Z0-9\\s,.!?]+$"
         ></textarea>
         <div class="invalid-feedback">Please enter a Description.</div>
         <div class="valid-feedback">Looks Good</div>
@@ -87,7 +87,7 @@
             name="listing[location]"
             placeholder="Enter Location"
             class="form-control"
-            pattern="^[a-zA-Z]+$"
+            pattern="^[a-zA-Z ]+$"
             required
           />
           <div class="invalid-feedback">Please enter a valid Location.</div>
@@ -105,7 +105,7 @@
             name="listing[country]"
             placeholder="Enter Country"
             class="form-control"
-            pattern="^[a-zA-Z]+$"
+            pattern="^[a-zA-Z ]+$"
             required
           />
           <div class="invalid-feedback">Please enter a valid Country.</div>

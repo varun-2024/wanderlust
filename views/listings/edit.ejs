@@ -17,7 +17,7 @@
           name="listing[title]"
           value="<%= editListing.title %>"
           class="form-control"
-          pattern="^[a-zA-Z ]+$"
+          pattern="^[a-zA-Z0-9 ]+$"
           required
         />
         <div class="invalid-feedback">Please enter a title.</div>
@@ -33,7 +33,7 @@
           rows="5"
           cols="100"
           class="form-control"
-          pattern="^[a-zA-Z0-9\s,.!?]+$"
+          pattern="^[a-zA-Z0-9\\s,.!?]+$"
           required
         >
 <%= editListing.description %></textarea
