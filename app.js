@@ -37,6 +37,9 @@ app.use(
 const methodOverride = require("method-override");
 app.use(methodOverride("_method"));
 
+// wrapAsync Middleware
+const asyncWrap = require("./utils/wrapAsync.js");
+
 // Mongo DB Connection
 main()
   .then(() => {
@@ -227,6 +230,11 @@ app.use((err, req, res, next) => {
   next(err);
 });
 
+// Custom Error Handling Middleware
+app.use((err, req, res, next) => {
+  console.log("Something Went Wrong Custome Error");
+});
+
 // Error Handling Middleware
 app.use((err, req, res, next) => {
   console.log("-----ERROR-----");
@@ -239,13 +247,13 @@ app.use((err, req, res, next) => {
 });
 
 // AsyncWrap Middleware
-function asyncWrap(fn) {
+/* function asyncWrap(fn) {
   return function (req, res, next) {
     fn(req, res, next).catch((err) => {
       next(err);
     });
   };
-}
+} */
 
 // 404 Error Page
 /* app.use((req, res) => {

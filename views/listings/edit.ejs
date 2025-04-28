@@ -2,7 +2,12 @@
 <body>
   <h3>Edit Your Listing</h3>
   <div class="col-8 mx-auto mt-3">
-    <form action="/listings/<%= editListing.id %>?_method=PUT" method="POST">
+    <form
+      action="/listings/<%= editListing.id %>?_method=PUT"
+      method="POST"
+      class="needs-validation"
+      novalidate
+    >
       <div>
         <label for="title" class="form-label">Title</label>
         <br />
@@ -12,7 +17,11 @@
           name="listing[title]"
           value="<%= editListing.title %>"
           class="form-control"
+          pattern="^[a-zA-Z]+$"
+          required
         />
+        <div class="invalid-feedback">Please enter a title.</div>
+        <div class="valid-feedback">Looks Good</div>
       </div>
       <br /><br />
       <div>
@@ -24,9 +33,13 @@
           rows="5"
           cols="100"
           class="form-control"
+          pattern="^[a-zA-Z0-9\s,.!?]+$"
+          required
         >
 <%= editListing.description %></textarea
         >
+        <div class="invalid-feedback">Please enter a Description.</div>
+        <div class="valid-feedback">Looks Good</div>
       </div>
       <br /><br />
       <div>
@@ -38,7 +51,10 @@
           name="listing[image][filename]"
           value="<%= editListing.image.filename %>"
           class="form-control"
+          required
         />
+        <div class="invalid-feedback">Please enter image name.</div>
+        <div class="valid-feedback">Looks Good</div>
       </div>
       <br /><br />
       <div>
@@ -50,6 +66,7 @@
           name="listing[image][url]"
           value="<%= editListing.image.url %>"
           class="form-control"
+          required
         />
       </div>
       <br /><br />
@@ -63,7 +80,12 @@
             id="price"
             value="<%= editListing.price %>"
             class="form-control"
+            min="1"
+            step="1"
+            required
           />
+          <div class="invalid-feedback">Please enter valid Price.</div>
+          <div class="valid-feedback">Looks Good</div>
         </div>
         <br /><br />
         <div class="col-md-6 ml-3 mr-3 p-3">
@@ -75,7 +97,11 @@
             name="listing[location]"
             value="<%= editListing.location %>"
             class="form-control"
+            pattern="^[a-zA-Z]+$"
+            required
           />
+          <div class="invalid-feedback">Please enter a valid Location.</div>
+          <div class="valid-feedback">Looks Good</div>
         </div>
       </div>
       <br /><br />
@@ -88,7 +114,11 @@
           name="listing[country]"
           value="<%= editListing.country %>"
           class="form-control"
+          pattern="^[a-zA-Z]+$"
+          required
         />
+        <div class="invalid-feedback">Please enter a valid Country.</div>
+        <div class="valid-feedback">Looks Good</div>
       </div>
       <br /><br />
       <button type="submit" class="btn btn-outline-dark">Submit Listing</button>
