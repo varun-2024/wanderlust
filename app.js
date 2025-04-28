@@ -161,10 +161,20 @@ app.post(
 //Listing Show Route
 app.get(
   "/listings/:id",
-  asyncWrap(async (req, res) => {
+  asyncWrap(async (req, res, next) => {
     const { id } = req.params;
-    const showListing = await Listing.findById(id);
-    res.render("listings/show.ejs", { showListing });
+    try {
+      const showListing = await Listing.findById(id);
+      if (!showListing) {
+        return next(new ExpressError(404, "Listing not found!"));
+      }
+      res.render("listings/show.ejs", { showListing });
+    } catch (err) {
+      if (err.name === "CastError") {
+        return next(new ExpressError(400, "Invalid Listing ID!"));
+      }
+      next(err);
+    }
   })
 );
 
@@ -228,7 +238,8 @@ app.all(/.*/, (req, res, next) => {
 // Error Handling
 app.use((err, req, res, next) => {
   let { status = 500, message = "Something Went Wrong" } = err;
-  res.status(status).send(message);
+  res.status(status).render("error.ejs", { message });
+  //res.status(status).send(message);
 });
 
 // Custom Error Handling Middleware

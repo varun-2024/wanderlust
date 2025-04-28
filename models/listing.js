@@ -7,7 +7,10 @@ const listingSchema = new Schema({
     required: true,
     default: "Untitled Listing",
   },
-  description: String,
+  description: {
+    type: String,
+    required: true,
+  },
   image: {
     filename: {
       type: String,
@@ -24,9 +27,9 @@ const listingSchema = new Schema({
           : v,
     },
   },
-  price: Number,
-  location: String,
-  country: String,
+  price: { type: Number, required: true },
+  location: { type: String, required: true },
+  country: { type: String, required: true },
 });
 
 const Listing = mongoose.model("Listing", listingSchema);
