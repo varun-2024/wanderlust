@@ -55,6 +55,15 @@ async function main() {
   await mongoose.connect(MONGO_URL);
 }
 
+// validateListing
+/* const validateListing = (req, res, next) => {
+  let result = listingSchema.validate(req.body);
+  console.log(result);
+  if (result.error) {
+    throw new ExpressError(400, result.error);
+  }
+}; */
+
 // Middleware for listings Path Testing
 app.use("/listings", (req, res, next) => {
   console.log("Middleware for Listings Path Testing");
