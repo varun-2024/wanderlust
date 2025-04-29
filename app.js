@@ -60,7 +60,10 @@ async function main() {
   let result = listingSchema.validate(req.body);
   console.log(result);
   if (result.error) {
-    throw new ExpressError(400, result.error);
+    let errMsg = result.error.details.map((el) => el.message).join(",");
+    throw new ExpressError(400, errMsg);
+  } else {
+    next();
   }
 }; */
 

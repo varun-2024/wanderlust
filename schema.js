@@ -21,9 +21,9 @@ module.exports.validateListing = (req, res, next) => {
   const { error } = module.exports.listingSchema.validate(req.body);
   console.log(error);
   if (error) {
-    //const msg = error.details.map((el) => el.message).join(",");
-    //return next(new ExpressError(400, msg));
-    return next(new ExpressError(400, error));
+    const msg = error.details.map((el) => el.message).join(",");
+    return next(new ExpressError(400, msg));
+    //return next(new ExpressError(400, error));
   }
   next();
 };
