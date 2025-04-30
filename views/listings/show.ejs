@@ -1,8 +1,8 @@
 <% layout("/layouts/boilerplate.ejs") %>
 <body>
   <div class="show-container">
-    <h3>Listing Details</h3>
-    <div class="card mb-3">
+    <h3><%= showListing.title %></h3>
+    <div class="card mb-3 col-8 mx-auto mt-3">
       <img
         src="<%= showListing.image.url %>"
         class="card-img-top"
@@ -41,6 +41,59 @@
     >
     <form action="/listings/<%=showListing.id%>?_method=DELETE" method="POST">
       <button type="submit" class="btn btn-outline-dark">Delete Listing</button>
+    </form>
+  </div>
+  <br />
+  <br />
+  <div
+    class="col-8 mx-auto mt-3 p-5 border border-dark-subtle rounded-3 border-opacity-10"
+  >
+    <h4 class="text-center">Leave a Review</h4>
+    <hr />
+    <br />
+    <form
+      action="/listings/<%=showListing.id%>/reviews"
+      method="POST"
+      class="needs-validation"
+      novalidate
+    >
+      <div>
+        <label for="rating" class="form-label">Rating</label>
+        <br />
+        <input
+          type="range"
+          min="1"
+          max="5"
+          name="review[rating]"
+          id="rating"
+          value="3"
+          class="form-range"
+          required
+        />
+        <br /><br />
+      </div>
+      <div>
+        <label for="comment" class="form-label">Comment</label>
+        <br />
+        <textarea
+          name="review[comment]"
+          id="comment"
+          cols="30"
+          rows="5"
+          class="form-control"
+          required
+          pattern="^[a-zA-Z0-9\\s,.!?]+$"
+        ></textarea>
+        <div class="invalid-feedback">Please enter a Valid Description.</div>
+        <div class="valid-feedback">Looks Good</div>
+        <br /><br />
+        <div class="button-container">
+          <button type="submit" class="btn btn-outline-dark">Submit</button>
+          <a href="/listings"
+            ><button type="button" class="btn btn-outline-dark">Back</button></a
+          >
+        </div>
+      </div>
     </form>
   </div>
 </body>

@@ -6,7 +6,10 @@ const port = 8080;
 const mongoose = require("mongoose");
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 //Model
+// Listing Model
 const Listing = require("./models/listing.js");
+// Review Model
+const Review = require("./models/review.js");
 // Require Path
 const path = require("path");
 
@@ -247,6 +250,24 @@ app.delete(
 /* app.get("/error", (req, res) => {
   abc = abc;
 }); */
+
+/* ----------------------------------------------------------------------------------------- */
+
+// Reviews Routes
+// Review Post Request Route
+app.post(
+  "/listings/:id/reviews",
+  asyncWrap(async (req, res) => {
+    //const { id } = req.params;
+    let listing = await Listing.findById(req.params.id);
+    let newReview = new Review(req.body.review);
+    listing.reviews.push(newReview);
+    await newReview.save();
+    await listing.save();
+    console.log("New Review Saved");
+    res.send("New Review Saved");
+  })
+);
 
 // 404 Error Page Second Method
 app.all(/.*/, (req, res, next) => {
