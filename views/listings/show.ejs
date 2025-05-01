@@ -56,6 +56,7 @@
       method="POST"
       class="needs-validation"
       novalidate
+      id="reviewForm"
     >
       <div>
         <label for="rating" class="form-label">Rating</label>
@@ -70,6 +71,7 @@
           class="form-range"
           required
         />
+        <div class="invalid-feedback">Please provide a rating.</div>
         <br /><br />
       </div>
       <div>
@@ -84,7 +86,13 @@
           required
           pattern="^[a-zA-Z0-9\\s,.!?]+$"
         ></textarea>
-        <div class="invalid-feedback">Please enter a Valid Description.</div>
+        <div class="invalid-feedback" id="commentLengthError">
+          Please enter a minimum of 15 characters.
+        </div>
+        <div class="invalid-feedback">
+          Please enter only letters, numbers, spaces, commas, periods,
+          exclamation marks, or question marks.
+        </div>
         <div class="valid-feedback">Looks Good</div>
         <br /><br />
         <div class="button-container">
@@ -95,5 +103,54 @@
         </div>
       </div>
     </form>
+
+    <div>
+      <br />
+      <h3><b>All Reviews</b></h3>
+      <div class="d-flex flex-wrap justify-content-center align-items-center">
+        <% for(review of showListing.reviews) {%>
+        <div
+          class="card col-5 flex-fill mt-5 border border-dark-subtle rounded-3 border-opacity-10"
+        >
+          <div class="card-body w-100">
+            <h6 class="card-title">Jane Doe</h6>
+            <p class="card-text"><%=review.comment%></p>
+            <p class="card-text">
+              <%=review.rating%><i class="fa-solid fa-star"></i>Stars
+            </p>
+          </div>
+        </div>
+        <%}%>
+      </div>
+    </div>
   </div>
+  <script>
+    const form = document.getElementById("reviewForm");
+    const commentInput = document.getElementById("comment");
+    const commentLengthError = document.getElementById("commentLengthError");
+    const minCommentLength = 15;
+
+    form.addEventListener("submit", function (event) {
+      if (!form.checkValidity() || !validateCommentLength()) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      form.classList.add("was-validated");
+    });
+
+    commentInput.addEventListener("input", validateCommentLength);
+
+    function validateCommentLength() {
+      const commentValue = commentInput.value.trim();
+      if (commentValue.length < minCommentLength) {
+        commentLengthError.style.display = "block";
+        commentInput.classList.add("is-invalid");
+        return false;
+      } else {
+        commentLengthError.style.display = "none";
+        commentInput.classList.remove("is-invalid");
+        return true;
+      }
+    }
+  </script>
 </body>

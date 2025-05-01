@@ -43,7 +43,12 @@ const methodOverride = require("method-override");
 app.use(methodOverride("_method"));
 
 // Joi Schema
-const { listingSchema, validateListing } = require("./schema.js");
+const {
+  listingSchema,
+  reviewSchema,
+  validateListing,
+  validateReviews,
+} = require("./schema.js");
 
 // Mongo DB Connection
 main()
@@ -184,7 +189,7 @@ app.get(
   asyncWrap(async (req, res, next) => {
     const { id } = req.params;
     try {
-      const showListing = await Listing.findById(id);
+      const showListing = await Listing.findById(id).populate("reviews");
       if (!showListing) {
         return next(new ExpressError(404, "Listing not found!"));
       }
@@ -257,6 +262,7 @@ app.delete(
 // Review Post Request Route
 app.post(
   "/listings/:id/reviews",
+  validateReviews,
   asyncWrap(async (req, res) => {
     //const { id } = req.params;
     let listing = await Listing.findById(req.params.id);
@@ -265,7 +271,7 @@ app.post(
     await newReview.save();
     await listing.save();
     console.log("New Review Saved");
-    res.send("New Review Saved");
+    res.redirect(`/listings/${listing._id}`);
   })
 );
 
