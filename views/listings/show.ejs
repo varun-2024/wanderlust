@@ -119,6 +119,9 @@
               <i class="fa-solid fa-star"></i><%=review.rating%></i> Stars
             </p>
           </div>
+          <form action="/listings/<%=showListing.id%>/reviews/<%=review.id %>?_method=DELETE" method="POST" class="mb-3 text-center" >
+            <button class="btn btn-sm btn-outline-dark">Delete</button>
+          </form>
         </div>
         <%}%>
       </div>

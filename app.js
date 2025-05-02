@@ -276,7 +276,17 @@ app.post(
 );
 
 //Delete Review Route
-app.delete("/listings/:id/reviews/reviewId"), asyncWrap(async (req, res) => {});
+app.delete(
+  "/listings/:id/reviews/:reviewId",
+  asyncWrap(async (req, res) => {
+    let { id, reviewId } = req.params;
+    console.log(id, reviewId);
+    await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+    await Review.findByIdAndDelete(reviewId);
+    console.log("Job done");
+    res.redirect(`/listings/${id}`);
+  })
+);
 
 // 404 Error Page Second Method
 app.all(/.*/, (req, res, next) => {
