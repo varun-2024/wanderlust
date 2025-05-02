@@ -275,6 +275,9 @@ app.post(
   })
 );
 
+//Delete Review Route
+app.delete("/listings/:id/reviews/reviewId"), asyncWrap(async (req, res) => {});
+
 // 404 Error Page Second Method
 app.all(/.*/, (req, res, next) => {
   next(new ExpressError(404, "Page Not Found"));
