@@ -76,10 +76,10 @@ async function main() {
 }; */
 
 // Middleware for listings Path Testing
-app.use("/listings", (req, res, next) => {
+/* app.use("/listings", (req, res, next) => {
   console.log("Middleware for Listings Path Testing");
   return next();
-});
+}); */
 
 // Middleware for logging request details works for all routes and requests
 app.use((req, res, next) => {
@@ -240,8 +240,8 @@ app.delete(
   "/listings/:id",
   asyncWrap(async (req, res) => {
     const { id } = req.params;
-    await Listing.findByIdAndDelete(id, { deleted: true });
-    console.log("Deleted Listing:", id);
+    let deletedListing = await Listing.findByIdAndDelete(id, { deleted: true });
+    console.log("Deleted Listing:", deletedListing, "Listing Id:", id);
     res.redirect("/listings");
   })
 );
@@ -278,6 +278,7 @@ app.post(
 //Delete Review Route
 app.delete(
   "/listings/:id/reviews/:reviewId",
+  validateReviews,
   asyncWrap(async (req, res) => {
     let { id, reviewId } = req.params;
     console.log(id, reviewId);
