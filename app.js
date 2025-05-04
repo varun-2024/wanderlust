@@ -5,18 +5,12 @@ const port = 8080;
 //Require Mongoose
 const mongoose = require("mongoose");
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
-//Model
-// Listing Model
-const Listing = require("./models/listing.js");
-// Review Model
-const Review = require("./models/review.js");
+
 // Require Path
 const path = require("path");
 
 // ExpressErrors Class
 const ExpressError = require("./utils/expresserror.js");
-// wrapAsync Middleware
-const asyncWrap = require("./utils/wrapAsync.js");
 
 // Middlewares
 
@@ -42,13 +36,12 @@ app.use(
 const methodOverride = require("method-override");
 app.use(methodOverride("_method"));
 
-// Joi Schema
-const {
-  listingSchema,
-  reviewSchema,
-  validateListing,
-  validateReviews,
-} = require("./schema.js");
+// Routes
+const listings = require("./Routes/listing.js");
+const reviews = require("./Routes/review.js");
+// Use Listing & Review Route
+app.use("/listings", listings);
+app.use("/listings/:id/reviews", reviews);
 
 // Mongo DB Connection
 main()
@@ -62,6 +55,48 @@ main()
 async function main() {
   await mongoose.connect(MONGO_URL);
 }
+
+// Middleware for logging request details works for all routes and requests
+app.use((req, res, next) => {
+  req.time = new Date(Date.now()).toString();
+  console.log(
+    "Request Method: ",
+    req.method,
+    "\nHost Name : ",
+    req.hostname,
+    "\nRequest Path",
+    req.path,
+    "\nRequest Time :",
+    req.time
+  );
+  return next();
+});
+
+//Root Get Path
+app.get("/", (req, res) => {
+  res.send("Welcome to Home Page");
+});
+
+/* ----------------------------------------------------------------------------------------- */
+
+// 404 Error Page Second Method
+app.all(/.*/, (req, res, next) => {
+  next(new ExpressError(404, "Page Not Found"));
+});
+
+// Error Handling
+app.use((err, req, res, next) => {
+  let { status = 500, message = "Something Went Wrong" } = err;
+  res.status(status).render("error.ejs", { message });
+  //res.status(status).send(message);
+});
+
+//Server Listening
+app.listen(port, () => {
+  console.log("Server Listening on port 8080");
+});
+
+/* ------------------------------------------------------------------------------------------ */
 
 // validateListing
 /* const validateListing = (req, res, next) => {
@@ -80,22 +115,6 @@ async function main() {
   console.log("Middleware for Listings Path Testing");
   return next();
 }); */
-
-// Middleware for logging request details works for all routes and requests
-app.use((req, res, next) => {
-  req.time = new Date(Date.now()).toString();
-  console.log(
-    "Request Method: ",
-    req.method,
-    "\nHost Name : ",
-    req.hostname,
-    "\nRequest Path",
-    req.path,
-    "\nRequest Time :",
-    req.time
-  );
-  return next();
-});
 
 //Middleware for API Route
 /* app.use("/api", (req, res, next) => {
@@ -120,23 +139,11 @@ app.use((req, res, next) => {
     res.status(403).send("Access Denied");
   }
 }; */
-const checkToken = (req, res, next) => {
-  let { token } = req.query;
-  if (token === "giveaccess") {
-    console.log("Access Granted to API Route");
-    return next();
-  }
-  return next(new ExpressError(401, "Access Denied"));
-};
+
 // Api Route Test
 /* app.get("/api", checkToken, (req, res) => {
   res.send("Data");
 }); */
-
-//Root Get Path
-app.get("/", (req, res) => {
-  res.send("Welcome to Home Page");
-});
 
 // Tests Listing
 /* app.get("/testListing", async (req, res) => {
@@ -153,99 +160,6 @@ app.get("/", (req, res) => {
   res.send("Test Sucessful");
 }); */
 
-//Listing Index Route
-app.get(
-  "/listings",
-  asyncWrap(async (req, res) => {
-    const allListings = await Listing.find({});
-    res.render("listings/index.ejs", { allListings });
-  })
-);
-
-//Listing New Route
-app.get("/listings/new", (req, res, next) => {
-  res.render("listings/new.ejs");
-});
-
-//Listing Create Route
-app.post(
-  "/listings",
-  validateListing,
-  asyncWrap(async (req, res) => {
-    console.log("Post requesr Recieved");
-    if (!req.body.listing) {
-      throw new ExpressError(400, "Send Valid data for Listing");
-    }
-    const newListing = new Listing(req.body.listing);
-    await newListing.save();
-    console.log("New Listing Created:", newListing);
-    res.redirect("/listings");
-  })
-);
-
-//Listing Show Route
-app.get(
-  "/listings/:id",
-  asyncWrap(async (req, res, next) => {
-    const { id } = req.params;
-    try {
-      const showListing = await Listing.findById(id).populate("reviews");
-      if (!showListing) {
-        return next(new ExpressError(404, "Listing not found!"));
-      }
-      res.render("listings/show.ejs", { showListing });
-    } catch (err) {
-      if (err.name === "CastError") {
-        return next(new ExpressError(400, "Invalid Listing ID!"));
-      }
-      next(err);
-    }
-  })
-);
-
-// Edit Get Request Route
-app.get(
-  "/listings/:id/edit",
-  asyncWrap(async (req, res) => {
-    const { id } = req.params;
-    const editListing = await Listing.findById(id);
-    res.render("listings/edit.ejs", { editListing });
-  })
-);
-
-// Edit Put Request Route
-app.put(
-  "/listings/:id",
-  validateListing,
-  asyncWrap(async (req, res) => {
-    if (!req.body.listing) {
-      throw new ExpressError(400, "Send Valid data for Listing");
-    }
-    const { id } = req.params;
-    console.log(req.body.listing);
-    const updatedListing = await Listing.findByIdAndUpdate(
-      id,
-      { ...req.body.listing },
-      {
-        new: true,
-      }
-    );
-    console.log("Updated Listing:", updatedListing);
-    res.redirect(`/listings/${id}`);
-  })
-);
-
-// Delete Request Route
-app.delete(
-  "/listings/:id",
-  asyncWrap(async (req, res) => {
-    const { id } = req.params;
-    let deletedListing = await Listing.findByIdAndDelete(id, { deleted: true });
-    console.log("Deleted Listing:", deletedListing, "Listing Id:", id);
-    res.redirect("/listings");
-  })
-);
-
 // Admin Route Test
 /* app.get("/admin", (req, res) => {
   throw new ExpressError(403, "Access to Admin is Forbidden");
@@ -255,51 +169,6 @@ app.delete(
 /* app.get("/error", (req, res) => {
   abc = abc;
 }); */
-
-/* ----------------------------------------------------------------------------------------- */
-
-// Reviews Routes
-// Review Post Request Route
-app.post(
-  "/listings/:id/reviews",
-  validateReviews,
-  asyncWrap(async (req, res) => {
-    //const { id } = req.params;
-    let listing = await Listing.findById(req.params.id);
-    let newReview = new Review(req.body.review);
-    listing.reviews.push(newReview);
-    await newReview.save();
-    await listing.save();
-    console.log("New Review Saved");
-    res.redirect(`/listings/${listing._id}`);
-  })
-);
-
-//Delete Review Route
-app.delete(
-  "/listings/:id/reviews/:reviewId",
-  validateReviews,
-  asyncWrap(async (req, res) => {
-    let { id, reviewId } = req.params;
-    console.log(id, reviewId);
-    await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
-    await Review.findByIdAndDelete(reviewId);
-    console.log("Job done");
-    res.redirect(`/listings/${id}`);
-  })
-);
-
-// 404 Error Page Second Method
-app.all(/.*/, (req, res, next) => {
-  next(new ExpressError(404, "Page Not Found"));
-});
-
-// Error Handling
-app.use((err, req, res, next) => {
-  let { status = 500, message = "Something Went Wrong" } = err;
-  res.status(status).render("error.ejs", { message });
-  //res.status(status).send(message);
-});
 
 // Custom Error Handling Middleware
 /* app.use((err, req, res, next) => {
@@ -345,7 +214,31 @@ app.use((err, req, res, next) => {
 });
  */
 
-//Server Listening
-app.listen(port, () => {
-  console.log("Server Listening on port 8080");
-});
+// Access Token
+/* const checkToken = (req, res, next) => {
+  let { token } = req.query;
+  if (token === "giveaccess") {
+    console.log("Access Granted to API Route");
+    return next();
+  }
+  return next(new ExpressError(401, "Access Denied"));
+}; */
+
+/* ------------------------------------------------------------------------------------------ */
+
+// Joi Schema
+/* const {
+  listingSchema,
+  reviewSchema,
+  validateListing,
+  validateReviews,
+} = require("./schema.js"); */
+
+//Model
+// Listing Model
+/* const Listing = require("./models/listing.js"); */
+// Review Model
+/* const Review = require("./models/review.js"); */
+
+// wrapAsync Middleware
+/* const asyncWrap = require("./utils/wrapAsync.js"); */
