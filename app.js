@@ -15,6 +15,7 @@ const cookieParser = require("cookie-parser");
 
 // Connect-Flash
 const flash = require("connect-flash");
+app.use(flash());
 
 // ExpressErrors Class
 const ExpressError = require("./utils/expresserror.js");
@@ -46,9 +47,6 @@ app.use(methodOverride("_method"));
 // Routes
 const listings = require("./Routes/listing.js");
 const reviews = require("./Routes/review.js");
-// Use Listing & Review Route
-app.use("/listings", listings);
-app.use("/listings/:id/reviews", reviews);
 
 //Cookie-Parser Use
 app.use(cookieParser("secretcode"));
@@ -59,9 +57,13 @@ const sessionOptions = {
   secret: "supersecretcode",
   resave: false,
   saveUninitialized: true,
+  cookie: {
+    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    httpOnly: true,
+  },
 };
 app.use(session(sessionOptions));
-app.use(flash());
 
 // Mongo DB Connection
 main()
@@ -92,31 +94,21 @@ app.use((req, res, next) => {
   return next();
 });
 /* ----------------------------------------------------------------------------------------- */
-// Register Test Route
-app.get("/register", (req, res) => {
-  let { name = "anonymous" } = req.query;
-  req.session.name = name;
-  if (name === "anonymous") {
-    req.flash("error", "user registration failed");
-  } else {
-    req.flash("success", "user registered sucessfully");
-  }
-
-  res.redirect("/hello");
-});
-
-// Hello Route
-app.get("/hello", (req, res) => {
-  res.locals.successMsg = req.flash("success");
-  res.locals.errorMsg = req.flash("error");
-  res.render("page.ejs", { name: req.session.name });
-});
 
 //Root Get Path
 app.get("/", (req, res) => {
   //console.dir(req.cookies);
   res.send("Welcome to Home Page");
 });
+
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  //console.log(success);
+  next();
+});
+// Use Listing & Review Route
+app.use("/listings", listings);
+app.use("/listings/:id/reviews", reviews);
 
 // 404 Error Page Second Method
 app.all(/.*/, (req, res, next) => {
@@ -282,6 +274,24 @@ app.listen(port, () => {
   res.send(`Test ${req.session.count} times Sucessful`);
 });
  */
+
+// Register Test Route
+/* app.get("/register", (req, res) => {
+  let { name = "anonymous" } = req.query;
+  req.session.name = name;
+  if (name === "anonymous") {
+    req.flash("error", "user registration failed");
+  } else {
+    req.flash("success", "user registered sucessfully");
+  }
+
+  res.redirect("/hello");
+});
+ */
+// Hello Route
+/* app.get("/hello", (req, res) => {
+  res.render("page.ejs", { name: req.session.name });
+}); */
 /* ------------------------------------------------------------------------------------------ */
 
 // Joi Schema

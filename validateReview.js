@@ -40,7 +40,7 @@ module.exports = {
 };
 
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", ()=> {
       const { setupCommentValidation } = require("/validateReview.js");
       setupCommentValidation("reviewForm", "comment", "commentLengthError");
     });
