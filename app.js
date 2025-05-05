@@ -2,12 +2,19 @@
 const express = require("express");
 const app = express();
 const port = 8080;
+
 //Require Mongoose
 const mongoose = require("mongoose");
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
 // Require Path
 const path = require("path");
+
+//Cookie-Parser
+const cookieParser = require("cookie-parser");
+
+// Connect-Flash
+const flash = require("connect-flash");
 
 // ExpressErrors Class
 const ExpressError = require("./utils/expresserror.js");
@@ -43,6 +50,19 @@ const reviews = require("./Routes/review.js");
 app.use("/listings", listings);
 app.use("/listings/:id/reviews", reviews);
 
+//Cookie-Parser Use
+app.use(cookieParser("secretcode"));
+
+// Express Session
+const session = require("express-session");
+const sessionOptions = {
+  secret: "supersecretcode",
+  resave: false,
+  saveUninitialized: true,
+};
+app.use(session(sessionOptions));
+app.use(flash());
+
 // Mongo DB Connection
 main()
   .then(() => {
@@ -71,13 +91,32 @@ app.use((req, res, next) => {
   );
   return next();
 });
+/* ----------------------------------------------------------------------------------------- */
+// Register Test Route
+app.get("/register", (req, res) => {
+  let { name = "anonymous" } = req.query;
+  req.session.name = name;
+  if (name === "anonymous") {
+    req.flash("error", "user registration failed");
+  } else {
+    req.flash("success", "user registered sucessfully");
+  }
+
+  res.redirect("/hello");
+});
+
+// Hello Route
+app.get("/hello", (req, res) => {
+  res.locals.successMsg = req.flash("success");
+  res.locals.errorMsg = req.flash("error");
+  res.render("page.ejs", { name: req.session.name });
+});
 
 //Root Get Path
 app.get("/", (req, res) => {
+  //console.dir(req.cookies);
   res.send("Welcome to Home Page");
 });
-
-/* ----------------------------------------------------------------------------------------- */
 
 // 404 Error Page Second Method
 app.all(/.*/, (req, res, next) => {
@@ -224,6 +263,25 @@ app.listen(port, () => {
   return next(new ExpressError(401, "Access Denied"));
 }; */
 
+// Greet path Cookie Trial
+/* app.get("/greet", (req, res) => {
+  //res.cookie("name", `${req.params.name}`);
+  res.cookie("country", "UK", { signed: true });
+  console.log(req.signedCookies);
+  res.send(req.signedCookies.country);
+});
+ */
+
+//Test Route Express Sessions
+/* app.get("/test", (req, res) => {
+  if (req.session.count) {
+    req.session.count++;
+  } else {
+    req.session.count = 1;
+  }
+  res.send(`Test ${req.session.count} times Sucessful`);
+});
+ */
 /* ------------------------------------------------------------------------------------------ */
 
 // Joi Schema
