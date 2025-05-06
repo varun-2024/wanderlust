@@ -39,14 +39,14 @@ module.exports = {
   setupCommentValidation,
 };
 
-<script>
+{
+  /* <script>
     document.addEventListener("DOMContentLoaded", ()=> {
       const { setupCommentValidation } = require("/validateReview.js");
       setupCommentValidation("reviewForm", "comment", "commentLengthError");
     });
-  </script>
-
-
+  </script> */
+}
 
 /* const form = document.getElementById("reviewForm");
 const commentInput = document.getElementById("comment");
