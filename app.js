@@ -50,8 +50,9 @@ const methodOverride = require("method-override");
 app.use(methodOverride("_method"));
 
 // Routes
-const listings = require("./Routes/listing.js");
-const reviews = require("./Routes/review.js");
+const listingRouter = require("./Routes/listing.js");
+const reviewRouter = require("./Routes/review.js");
+const userRouter = require("./Routes/user.js");
 
 //Cookie-Parser Use
 app.use(cookieParser("secretcode"));
@@ -129,8 +130,9 @@ app.get("/demouser", async (req, res) => {
   res.send(registeredUser);
 });
 // Use Listing & Review Route
-app.use("/listings", listings);
-app.use("/listings/:id/reviews", reviews);
+app.use("/listings", listingRouter);
+app.use("/listings/:id/reviews", reviewRouter);
+app.use("/", userRouter);
 
 // 404 Error Page Second Method
 app.all(/.*/, (req, res, next) => {
