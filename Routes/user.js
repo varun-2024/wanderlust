@@ -37,7 +37,8 @@ router.post(
     failureFlash: true,
   }),
   asyncWrap(async (req, res) => {
-    res.send("Welcome, you ar logged in!");
+    req.flash("success", "Welcome, you are logged in!");
+    res.redirect("/listings");
   })
 );
 
