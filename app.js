@@ -120,15 +120,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/demouser", async (req, res) => {
-  let fakeUser = new User({
-    email: "student@gmail.com",
-    username: "fakestudent",
-  });
-  let registeredUser = await User.register(fakeUser, "fakepassword");
-  console.log("User Registered : ", registeredUser);
-  res.send(registeredUser);
-});
+/* --------------------------------------------------------------- */
 // Use Listing & Review Route
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
@@ -315,6 +307,16 @@ app.listen(port, () => {
 // Hello Route
 /* app.get("/hello", (req, res) => {
   res.render("page.ejs", { name: req.session.name });
+}); */
+
+/* app.get("/demouser", async (req, res) => {
+  let fakeUser = new User({
+    email: "student@gmail.com",
+    username: "fakestudent",
+  });
+  let registeredUser = await User.register(fakeUser, "fakepassword");
+  console.log("User Registered : ", registeredUser);
+  res.send(registeredUser);
 }); */
 /* ------------------------------------------------------------------------------------------ */
 

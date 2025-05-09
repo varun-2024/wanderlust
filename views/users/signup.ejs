@@ -9,7 +9,7 @@
         <input
           type="text"
           id="username"
-          name="user[username]"
+          name="username"
           placeholder="Enter Username"
           class="form-control"
           pattern="^[a-zA-Z0-9 ]+$"
@@ -25,10 +25,10 @@
         <input
           type="text"
           id="email"
-          name="user[email]"
+          name="email"
           placeholder="Enter Email"
           class="form-control"
-          pattern="^[a-zA-Z0-9 ]+$"
+          pattern="^^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
           required
         />
         <div class="invalid-feedback">Please enter a valid email.</div>
@@ -41,7 +41,7 @@
         <input
           type="password"
           id="password"
-          name="user[password]"
+          name="password"
           placeholder="Enter Password"
           class="form-control"
           pattern="^[a-zA-Z0-9 ]+$"
