@@ -19,7 +19,7 @@
           >
           <i><small>Created by: <%= showListing.owner.username%></small></i>
         </p>
-        <p class="card-text"><%= showListing.description %></p>
+        <p class="card-text lead"><%= showListing.description %></p>
         <p><b>£<%= showListing.price.toLocaleString("en-GB") %></b></p>
       </div>
     </div>
@@ -81,10 +81,8 @@
           />
           <div class="invalid-feedback">Please provide a rating.</div>
           <br /><br /> -->
-
+          <label for="rating" class="form-label">Rating</label>
           <fieldset class="starability-slot">
-            <legend class="h5">First rating:</legend>
-
             <input
               type="radio"
               id="no-rate"
@@ -131,7 +129,6 @@
             <label for="first-rate5" title="Amazing">5 stars</label>
           </fieldset>
         </div>
-        <br />
 
         <div>
           <label for="comment" class="form-label">Comment</label>
@@ -183,7 +180,7 @@
               class="starability-result card-text"
               data-rating="<%=review.rating%>"
             ></p>
-            <p class="card-text"><%=review.comment%></p>
+            <p class="card-text lead"><%=review.comment%></p>
             <!-- <p class="card-text">
               <i class="fa-solid fa-star"></i><%=review.rating%></i> Stars
             </p> -->
