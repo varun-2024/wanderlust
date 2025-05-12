@@ -17,7 +17,18 @@ module.exports.listingSchema = Joi.object({
   }).required(),
 });
 
-module.exports.validateListing = (req, res, next) => {
+module.exports.reviewSchema = Joi.object({
+  review: Joi.object({
+    rating: Joi.number().required().min(1).max(5),
+    comment: Joi.string()
+      .pattern(new RegExp("^[a-zA-Z0-9\\s,.!?]+$"))
+      .required()
+      .min(15),
+  }).required(),
+});
+/* ---------------- Middleware Shifted to Middleware.JS------------------ */
+/* module.exports.validateListing = (req, res, next) => {
+  console.log("Entered validateListing Middleware :");
   const { error } = module.exports.listingSchema.validate(req.body);
   console.log(error);
   if (error) {
@@ -28,17 +39,9 @@ module.exports.validateListing = (req, res, next) => {
   next();
 };
 
-module.exports.reviewSchema = Joi.object({
-  review: Joi.object({
-    rating: Joi.number().required().min(1).max(5),
-    comment: Joi.string()
-      .pattern(new RegExp("^[a-zA-Z0-9\\s,.!?]+$"))
-      .required()
-      .min(15),
-  }).required(),
-});
-
 module.exports.validateReviews = (req, res, next) => {
+  console.log("Entered validateReviews Middleware :");
+  console.log(req.body);
   const { error } = module.exports.reviewSchema.validate(req.body);
   console.log(error);
   if (error) {
@@ -46,7 +49,8 @@ module.exports.validateReviews = (req, res, next) => {
     return next(new ExpressError(400, msg));
   }
   next();
-};
+}; */
+
 // schema.js
 // Make sure this path is correct
 

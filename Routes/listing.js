@@ -11,14 +11,16 @@ const { isLoggedIn } = require("../middleware.js");
 //Model
 // Listing Model
 const Listing = require("../models/listing.js");
-
-// Joi Schema
+// Middleware
 const {
-  listingSchema,
-  reviewSchema,
+  saveRedirectUrl,
+  isOwner,
   validateListing,
   validateReviews,
-} = require("../schema.js");
+} = require("../middleware.js");
+
+// Joi Schema
+const { listingSchema, reviewSchema } = require("../schema.js");
 
 // wrapAsync Middleware
 const asyncWrap = require("../utils/wrapAsync.js");
@@ -49,6 +51,8 @@ router.post(
       throw new ExpressError(400, "Send Valid data for Listing");
     }
     const newListing = new Listing(req.body.listing);
+    console.log("Req User : ", req.user);
+    newListing.owner = req.user._id;
     await newListing.save();
     console.log("New Listing Created:", newListing);
     req.flash("success", "New Listing Created!");
@@ -61,11 +65,14 @@ router.get(
   "/:id",
   asyncWrap(async (req, res, next) => {
     const { id } = req.params;
-    const showListing = await Listing.findById(id).populate("reviews");
+    const showListing = await Listing.findById(id)
+      .populate("reviews")
+      .populate("owner");
     if (!showListing) {
       req.flash("error", "Sorry, Listing Does Not Exist!");
       return res.redirect("/listings");
     }
+    console.log("Listing :", showListing);
     res.render("listings/show.ejs", { showListing });
   })
 );
@@ -74,6 +81,7 @@ router.get(
 router.get(
   "/:id/edit",
   isLoggedIn,
+  isOwner,
   asyncWrap(async (req, res) => {
     const { id } = req.params;
     const editListing = await Listing.findById(id);
@@ -85,10 +93,11 @@ router.get(
   })
 );
 
-// Edit Put Request Route
+// Update Route - Edit Put Request Route
 router.put(
   "/:id",
   isLoggedIn,
+  isOwner,
   validateListing,
   asyncWrap(async (req, res) => {
     if (!req.body.listing) {
@@ -113,6 +122,7 @@ router.put(
 router.delete(
   "/:id",
   isLoggedIn,
+  isOwner,
   asyncWrap(async (req, res) => {
     const { id } = req.params;
     let deletedListing = await Listing.findByIdAndDelete(id, { deleted: true });
@@ -123,3 +133,12 @@ router.delete(
 );
 
 module.exports = router;
+
+/* let listing = await Listing.findById(id);
+if (!listing.owner._id.equals(res.locals.currUser._id)) {
+  req.flash("error", "Permission Denied!");
+  return res.redirect(`/listings/${id}`);
+  let redirectUrl = res.locals.redirectUrl || "/listings";
+  res.redirect(redirectUrl);
+}
+ */

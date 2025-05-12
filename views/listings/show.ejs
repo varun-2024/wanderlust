@@ -17,6 +17,7 @@
               <%= showListing.location %>, <%= showListing.country %>
             </p></small
           >
+          <i><small>Created by: <%= showListing.owner.username%></small></i>
         </p>
         <p class="card-text"><%= showListing.description %></p>
         <p><b>£<%= showListing.price.toLocaleString("en-GB") %></b></p>
@@ -34,6 +35,7 @@
     <a href="/listings"
       ><button type="button" class="btn btn-outline-dark">Go Back</button></a
     >
+    <% if(currUser && currUser._id.equals(showListing.owner._id)) {%>
     <a href="/listings/<%= showListing.id %>/edit"
       ><button type="button" class="btn btn-outline-dark">
         Edit Listing
@@ -42,6 +44,7 @@
     <form action="/listings/<%=showListing.id%>?_method=DELETE" method="POST">
       <button type="submit" class="btn btn-outline-danger">Delete Listing</button>
     </form>
+    <%}%>
   </div>
   <br />
   <br />

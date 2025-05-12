@@ -14,13 +14,16 @@ const Listing = require("../models/listing.js");
 // Review Model
 const Review = require("../models/review.js");
 
-// Joi Schema
+// Middleware
 const {
-  listingSchema,
-  reviewSchema,
+  saveRedirectUrl,
+  isOwner,
   validateListing,
   validateReviews,
-} = require("../schema.js");
+} = require("../middleware.js");
+
+// Joi Schema
+const { listingSchema, reviewSchema } = require("../schema.js");
 
 // Reviews Routes
 // Review Post Request Route
