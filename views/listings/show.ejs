@@ -42,7 +42,9 @@
       </button></a
     >
     <form action="/listings/<%=showListing.id%>?_method=DELETE" method="POST">
-      <button type="submit" class="btn btn-outline-danger">Delete Listing</button>
+      <button type="submit" class="btn btn-outline-danger">
+        Delete Listing
+      </button>
     </form>
     <%}%>
   </div>
@@ -52,85 +54,146 @@
     class="col-8 mx-auto mt-3 p-5 border border-dark-subtle rounded-3 border-opacity-10"
     id="leavereview"
   >
-  <% if(currUser){%>
-  <div>
-    <h4 class="text-center">Leave a Review</h4>
-    <hr />
-    <br />
-    <form
-      action="/listings/<%=showListing.id%>/reviews"
-      method="POST"
-      class="needs-validation"
-      novalidate
-      id="reviewForm"
-    >
-      <div>
-        <label for="rating" class="form-label">Rating</label>
+    <% if(currUser){%>
+    <div>
+      <h4 class="text-center">Leave a Review</h4>
+      <hr />
+      <br />
+      <form
+        action="/listings/<%=showListing.id%>/reviews"
+        method="POST"
+        class="needs-validation"
+        novalidate
+        id="reviewForm"
+      >
+        <div class="">
+          <!-- <label for="rating" class="form-label">Rating</label>
+          <br />
+          <input
+            type="range"
+            min="1"
+            max="5"
+            name="review[rating]"
+            id="rating"
+            value="3"
+            class="form-range"
+            required
+          />
+          <div class="invalid-feedback">Please provide a rating.</div>
+          <br /><br /> -->
+
+          <fieldset class="starability-slot">
+            <legend class="h5">First rating:</legend>
+
+            <input
+              type="radio"
+              id="no-rate"
+              class="input-no-rate"
+              name="review[rating]"
+              value="1"
+              checked
+              aria-label="No rating."
+            />
+            <input
+              type="radio"
+              id="first-rate1"
+              name="review[rating]"
+              value="1"
+            />
+            <label for="first-rate1" title="Terrible">1 star</label>
+            <input
+              type="radio"
+              id="first-rate2"
+              name="review[rating]"
+              value="2"
+            />
+            <label for="first-rate2" title="Not good">2 stars</label>
+            <input
+              type="radio"
+              id="first-rate3"
+              name="review[rating]"
+              value="3"
+            />
+            <label for="first-rate3" title="Average">3 stars</label>
+            <input
+              type="radio"
+              id="first-rate4"
+              name="review[rating]"
+              value="4"
+            />
+            <label for="first-rate4" title="Very good">4 stars</label>
+            <input
+              type="radio"
+              id="first-rate5"
+              name="review[rating]"
+              value="5"
+            />
+            <label for="first-rate5" title="Amazing">5 stars</label>
+          </fieldset>
+        </div>
         <br />
-        <input
-          type="range"
-          min="1"
-          max="5"
-          name="review[rating]"
-          id="rating"
-          value="3"
-          class="form-range"
-          required
-        />
-        <div class="invalid-feedback">Please provide a rating.</div>
-        <br /><br />
-      </div>
-      <div>
-        <label for="comment" class="form-label">Comment</label>
-        <br />
-        <textarea
-          name="review[comment]"
-          id="comment"
-          cols="30"
-          rows="5"
-          class="form-control"
-          required
-          pattern="^[a-zA-Z0-9\\s,.!?]+$"
-        ></textarea>
-        <div class="invalid-feedback" id="commentLengthError">
-          Please enter a minimum of 15 characters.
+
+        <div>
+          <label for="comment" class="form-label">Comment</label>
+          <br />
+          <textarea
+            name="review[comment]"
+            id="comment"
+            cols="30"
+            rows="5"
+            class="form-control"
+            required
+            pattern="^[a-zA-Z0-9\\s,.!?]+$"
+          ></textarea>
+          <div class="invalid-feedback" id="commentLengthError">
+            Please enter a minimum of 15 characters.
+          </div>
+          <div class="invalid-feedback">
+            Please enter only letters, numbers, spaces, commas, periods,
+            exclamation marks, or question marks.
+          </div>
+          <div class="valid-feedback">Looks Good</div>
+          <br />
+          <div class="button-container">
+            <button type="submit" class="btn btn-outline-dark">Submit</button>
+            <a href="/listings"
+              ><button type="button" class="btn btn-outline-dark">
+                Back
+              </button></a
+            >
+          </div>
         </div>
-        <div class="invalid-feedback">
-          Please enter only letters, numbers, spaces, commas, periods,
-          exclamation marks, or question marks.
-        </div>
-        <div class="valid-feedback">Looks Good</div>
-        <br /><br />
-        <div class="button-container">
-          <button type="submit" class="btn btn-outline-dark">Submit</button>
-          <a href="/listings"
-            ><button type="button" class="btn btn-outline-dark">Back</button></a
-          >
-        </div>
-      </div>
-    </form>
-  </div>
-  <%}%>
-  
+      </form>
+    </div>
+    <%}%>
+
     <div>
       <br />
-      <h3><b>All Reviews</b></h3>
+      <h3 class="h4"><b>All Reviews</b></h3>
       <% if(showListing.reviews.length > 0){%>
       <div class="d-flex flex-wrap justify-content-center align-items-center">
         <% for(review of showListing.reviews) {%>
-        
-          <div
+
+        <div
           class="card col-5 flex-fill mt-5 border border-dark-subtle rounded-3 border-opacity-10"
         >
           <div class="card-body w-100">
-            <h6 class="card-title"><%=review.author.username%></h6>
+            <h6 class="card-title h5">@<%=review.author.username%></h6>
+            <p
+              class="starability-result card-text"
+              data-rating="<%=review.rating%>"
+            ></p>
             <p class="card-text"><%=review.comment%></p>
-            <p class="card-text">
+            <!-- <p class="card-text">
               <i class="fa-solid fa-star"></i><%=review.rating%></i> Stars
-            </p>
+            </p> -->
           </div>
           <%if(currUser && currUser._id.equals(review.author._id)){%>
-          <form action="/listings/<%=showListing.id%>/reviews/<%=review.id %>?_method=DELETE" method="POST" class="mb-3 text-center" >
+          <form
+            action="/listings/<%=showListing.id%>/reviews/<%=review.id %>?_method=DELETE"
+            method="POST"
+            class="mb-3 text-center"
+          >
             <button class="btn btn-sm btn-outline-dark">Delete</button>
           </form>
           <%}%>
@@ -138,15 +201,21 @@
         <%}%>
       </div>
       <%if(currUser) {%>
-        <p class="text-center"><a href="#leavereview">Add a Review</a></p>
-        <%} else{%>
-          <p class="text-center"><a href="http://localhost:8080/login">Login</a> to add a Review</p>
-          <%}%>
-      <%} else if(showListing.reviews.length == 0 && !currUser) {%>
-        <p class="text-center">No Reviews yet, <a href="http://localhost:8080/login">login</a> to add a Review</p>
-        <%} else if(showListing.reviews.length == 0 && currUser){%>
-          <p class="text-center"><a href="#leavereview">Be the First to Leave a Review</a></p>
-          <%}%>
+      <p class="text-center"><a href="#leavereview">Add a Review</a></p>
+      <%} else{%>
+      <p class="text-center">
+        <a href="http://localhost:8080/login">Login</a> to add a Review
+      </p>
+      <%}%> <%} else if(showListing.reviews.length == 0 && !currUser) {%>
+      <p class="text-center">
+        No Reviews yet, <a href="http://localhost:8080/login">login</a> to add a
+        Review
+      </p>
+      <%} else if(showListing.reviews.length == 0 && currUser){%>
+      <p class="text-center">
+        <a href="#leavereview">Be the First to Leave a Review</a>
+      </p>
+      <%}%>
     </div>
   </div>
   <script>
