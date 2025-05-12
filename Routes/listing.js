@@ -28,22 +28,30 @@ const asyncWrap = require("../utils/wrapAsync.js");
 // Controllers
 const listingController = require("../controllers/listing.js");
 
-//Listing Index Route
-router.get("/", asyncWrap(listingController.index));
+//Route Route - Listing Index Route (GET Request) & Listing Create Route (POST Request)
+router
+  .route("/")
+  .get(asyncWrap(listingController.index))
+  .post(
+    isLoggedIn,
+    validateListing,
+    asyncWrap(listingController.createListings)
+  );
 
 //Listing New Route
 router.get("/new", isLoggedIn, listingController.renderNewForm);
 
-//Listing Create Route
-router.post(
-  "/",
-  isLoggedIn,
-  validateListing,
-  asyncWrap(listingController.createListings)
-);
-
-//Listing Show Route
-router.get("/:id", asyncWrap(listingController.showListings));
+// Router Route- Listing Show Route(GET Request) & Listing Update Route (PUT Request) & Delete Route (DELETE Request)
+router
+  .route("/:id")
+  .get(asyncWrap(listingController.showListings))
+  .put(
+    isLoggedIn,
+    isOwner,
+    validateListing,
+    asyncWrap(listingController.updateListings)
+  )
+  .delete(isLoggedIn, isOwner, asyncWrap(listingController.destroyListings));
 
 // Edit Get Request Route
 router.get(
@@ -51,23 +59,6 @@ router.get(
   isLoggedIn,
   isOwner,
   asyncWrap(listingController.renderEditForm)
-);
-
-// Update Route - Edit Put Request Route
-router.put(
-  "/:id",
-  isLoggedIn,
-  isOwner,
-  validateListing,
-  asyncWrap(listingController.updateListings)
-);
-
-// Delete Request Route
-router.delete(
-  "/:id",
-  isLoggedIn,
-  isOwner,
-  asyncWrap(listingController.destroyListings)
 );
 
 module.exports = router;
