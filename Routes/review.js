@@ -20,6 +20,8 @@ const {
   isOwner,
   validateListing,
   validateReviews,
+  isLoggedIn,
+  isReviewAuthor,
 } = require("../middleware.js");
 
 // Joi Schema
@@ -30,6 +32,7 @@ const { listingSchema, reviewSchema } = require("../schema.js");
 router.post(
   "/",
   validateReviews,
+  isLoggedIn,
   asyncWrap(async (req, res) => {
     //const { id } = req.params;
     console.log("This is Params Id: ", req.params.id);
@@ -37,7 +40,8 @@ router.post(
     console.log("Listing Detail Review Post Route:", listing);
     console.log("Working Till here: req, body, review: ", req.body.review);
     let newReview = new Review(req.body.review);
-    console.log("Not Working here");
+    newReview.author = req.user._id;
+    //console.log("Not Working here");
     console.log("newReview Detail Review Post Route:", newReview);
     listing.reviews.push(newReview);
     await newReview.save();
@@ -51,6 +55,8 @@ router.post(
 //Delete Review Route
 router.delete(
   "/:reviewId",
+  isLoggedIn,
+  isReviewAuthor,
   asyncWrap(async (req, res) => {
     let { id, reviewId } = req.params;
     console.log(id, reviewId);

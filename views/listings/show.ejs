@@ -50,7 +50,10 @@
   <br />
   <div
     class="col-8 mx-auto mt-3 p-5 border border-dark-subtle rounded-3 border-opacity-10"
+    id="leavereview"
   >
+  <% if(currUser){%>
+  <div>
     <h4 class="text-center">Leave a Review</h4>
     <hr />
     <br />
@@ -106,28 +109,44 @@
         </div>
       </div>
     </form>
-
+  </div>
+  <%}%>
+  
     <div>
       <br />
       <h3><b>All Reviews</b></h3>
+      <% if(showListing.reviews.length > 0){%>
       <div class="d-flex flex-wrap justify-content-center align-items-center">
         <% for(review of showListing.reviews) {%>
-        <div
+        
+          <div
           class="card col-5 flex-fill mt-5 border border-dark-subtle rounded-3 border-opacity-10"
         >
           <div class="card-body w-100">
-            <h6 class="card-title">Jane Doe</h6>
+            <h6 class="card-title"><%=review.author.username%></h6>
             <p class="card-text"><%=review.comment%></p>
             <p class="card-text">
               <i class="fa-solid fa-star"></i><%=review.rating%></i> Stars
             </p>
           </div>
+          <%if(currUser && currUser._id.equals(review.author._id)){%>
           <form action="/listings/<%=showListing.id%>/reviews/<%=review.id %>?_method=DELETE" method="POST" class="mb-3 text-center" >
             <button class="btn btn-sm btn-outline-dark">Delete</button>
           </form>
+          <%}%>
         </div>
         <%}%>
       </div>
+      <%if(currUser) {%>
+        <p class="text-center"><a href="#leavereview">Add a Review</a></p>
+        <%} else{%>
+          <p class="text-center"><a href="http://localhost:8080/login">Login</a> to add a Review</p>
+          <%}%>
+      <%} else if(showListing.reviews.length == 0 && !currUser) {%>
+        <p class="text-center">No Reviews yet, <a href="http://localhost:8080/login">login</a> to add a Review</p>
+        <%} else if(showListing.reviews.length == 0 && currUser){%>
+          <p class="text-center"><a href="#leavereview">Be the First to Leave a Review</a></p>
+          <%}%>
     </div>
   </div>
   <script>

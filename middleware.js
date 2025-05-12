@@ -1,4 +1,5 @@
 const Listing = require("./models/listing.js");
+const Review = require("./models/review.js");
 const ExpressError = require("./utils/expresserror.js");
 const { listingSchema, reviewSchema } = require("./schema.js");
 
@@ -58,6 +59,19 @@ module.exports.validateReviews = (req, res, next) => {
   if (error) {
     const msg = error.details.map((el) => el.message).join(",");
     return next(new ExpressError(400, msg));
+  }
+  next();
+};
+
+module.exports.isReviewAuthor = async (req, res, next) => {
+  console.log("Inside isAuthor Middleware: ");
+  const { id, reviewId } = req.params;
+  let review = await Review.findById(reviewId);
+  if (!review.author._id.equals(res.locals.currUser._id)) {
+    req.flash("error", "Permission Denied, user not Authorised!");
+    return res.redirect(`/listings/${id}`);
+    /* let redirectUrl = res.locals.redirectUrl || "/listings";
+        res.redirect(redirectUrl); */
   }
   next();
 };
