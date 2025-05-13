@@ -2,7 +2,13 @@
 <body>
   <h3 class="mt-3">Add Your Listing</h3>
   <div class="col-8 mx-auto mt-3">
-    <form action="/listings" method="POST" novalidate class="needs-validation">
+    <form
+      action="/listings"
+      method="POST"
+      novalidate
+      class="needs-validation"
+      enctype="multipart/form-data"
+    >
       <div>
         <label for="title" class="form-label">Title</label>
         <br />
@@ -49,7 +55,7 @@
         <div class="valid-feedback">Looks Good</div>
       </div>
       <br /><br />
-      <div>
+      <!-- <div>
         <label for="url" class="form-label">Image URL</label>
         <br />
         <input
@@ -57,6 +63,17 @@
           id="url"
           name="listing[image][url]"
           placeholder="Enter Image URL"
+          class="form-control"
+        />
+      </div> -->
+      <div>
+        <label for="url" class="form-label">Upload Image</label>
+        <br />
+        <input
+          type="file"
+          id="url"
+          name="listing[image]"
+          placeholder="Upload Image"
           class="form-control"
         />
       </div>
