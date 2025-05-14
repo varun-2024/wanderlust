@@ -5,9 +5,12 @@ const router = express.Router();
 // ExpressErrors Class
 const ExpressError = require("../utils/expresserror.js");
 
+// Cloudinary
+const { cloudinary, storage } = require("../cloudConfig.js");
+
 // Multer
 const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
+const upload = multer({ storage });
 
 // isLoggedIn
 const { isLoggedIn } = require("../middleware.js");
@@ -36,15 +39,13 @@ const listingController = require("../controllers/listing.js");
 router
   .route("/")
   .get(asyncWrap(listingController.index))
-  /* .post(
+  .post(
     isLoggedIn,
     validateListing,
+    upload.single("listing[image]"),
     asyncWrap(listingController.createListings)
-  ); */
-  .post(upload.single("listing[image]"), (req, res) => {
-    console.log(req.file);
-    res.send(req.file);
-  });
+  );
+
 //Listing New Route
 router.get("/new", isLoggedIn, listingController.renderNewForm);
 

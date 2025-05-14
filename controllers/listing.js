@@ -23,6 +23,9 @@ module.exports.showListings = async (req, res, next) => {
 };
 
 module.exports.createListings = async (req, res) => {
+  let url = req.file.path;
+  let filename = req.file.filename;
+  console.log(url, "...", filename);
   console.log("Post request Received");
   if (!req.body.listing) {
     throw new ExpressError(400, "Send Valid data for Listing");
@@ -30,6 +33,7 @@ module.exports.createListings = async (req, res) => {
   const newListing = new Listing(req.body.listing);
   console.log("Req User : ", req.user);
   newListing.owner = req.user._id;
+  newListing.image = { filename, url };
   await newListing.save();
   console.log("New Listing Created:", newListing);
   req.flash("success", "New Listing Created!");

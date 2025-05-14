@@ -3,6 +3,13 @@ const express = require("express");
 const app = express();
 const port = 8080;
 
+//Require DotEnv
+
+if (process.env.NODE_ENV != "production") {
+  require("dotenv").config();
+}
+console.log(process.env.SECRET);
+
 //Require Mongoose
 const mongoose = require("mongoose");
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
