@@ -1,61 +1,64 @@
 <% layout("/layouts/boilerplate.ejs") %>
 <body>
-  <h3 class="mt-3">Add Your Listing</h3>
-  <div class="col-8 mx-auto mt-3">
-    <form
-      action="/listings"
-      method="POST"
-      novalidate
-      class="needs-validation"
-      enctype="multipart/form-data"
-    >
-      <div>
-        <label for="title" class="form-label">Title</label>
-        <br />
-        <input
-          type="text"
-          id="title"
-          name="listing[title]"
-          placeholder="Enter Property Title"
-          class="form-control"
-          pattern="^[a-zA-Z0-9 ]+$"
-          required
-        />
-        <div class="invalid-feedback">Please enter a title.</div>
-        <div class="valid-feedback">Looks Good</div>
-      </div>
-      <br /><br />
-      <div>
-        <label for="description" class="form-label">Description</label>
-        <br />
-        <textarea
-          id="description"
-          name="listing[description]"
-          placeholder="Enter Description"
-          class="form-control"
-          required
-          pattern="^[a-zA-Z0-9\\s,.!?]+$"
-        ></textarea>
-        <div class="invalid-feedback">Please enter a Description.</div>
-        <div class="valid-feedback">Looks Good</div>
-      </div>
-      <br /><br />
-      <div>
-        <label for="filename" class="form-label">Image name</label>
-        <br />
-        <input
-          type="text"
-          id="filename"
-          name="listing[image][filename]"
-          placeholder="Enter Image Name"
-          class="form-control"
-          required
-        />
-        <div class="invalid-feedback">Please enter image name.</div>
-        <div class="valid-feedback">Looks Good</div>
-      </div>
-      <br /><br />
-      <!-- <div>
+  <div
+    class="col-10 mx-auto mt-3 text-center p-1 border border-dark-subtle rounded-3 border-opacity-10"
+  >
+    <h3 class="mt-3">Add Your Listing</h3>
+    <div class="col-8 mx-auto mt-3">
+      <form
+        action="/listings"
+        method="POST"
+        novalidate
+        class="needs-validation"
+        enctype="multipart/form-data"
+      >
+        <div>
+          <label for="title" class="form-label">Title</label>
+          <br />
+          <input
+            type="text"
+            id="title"
+            name="listing[title]"
+            placeholder="Enter Property Title"
+            class="form-control"
+            pattern="^[a-zA-Z0-9 ]+$"
+            required
+          />
+          <div class="invalid-feedback">Please enter a title.</div>
+          <div class="valid-feedback">Looks Good</div>
+        </div>
+        <br /><br />
+        <div>
+          <label for="description" class="form-label">Description</label>
+          <br />
+          <textarea
+            id="description"
+            name="listing[description]"
+            placeholder="Enter Description"
+            class="form-control"
+            required
+            pattern="^[a-zA-Z0-9\\s,.!?]+$"
+          ></textarea>
+          <div class="invalid-feedback">Please enter a Description.</div>
+          <div class="valid-feedback">Looks Good</div>
+        </div>
+        <br /><br />
+        <div>
+          <label for="filename" class="form-label">Image name</label>
+          <br />
+          <input
+            type="text"
+            id="filename"
+            name="listing[image][filename]"
+            placeholder="Enter Image Name"
+            class="form-control"
+            required
+          />
+          <div class="invalid-feedback">Please enter image name.</div>
+          <div class="valid-feedback">Looks Good</div>
+        </div>
+        <br /><br />
+        <!-- <div>
         <label for="url" class="form-label">Image URL</label>
         <br />
         <input
@@ -66,81 +69,83 @@
           class="form-control"
         />
       </div> -->
-      <div>
-        <label for="url" class="form-label">Upload Image</label>
-        <br />
-        <input
-          type="file"
-          id="url"
-          name="listing[image]"
-          placeholder="Upload Image"
-          class="form-control"
-          required
-        />
-      </div>
-      <br /><br />
-      <div class="row">
-        <div class="col-md-6 ml-3 mr-3 p-3">
-          <label for="price" class="form-label">Price</label>
+        <div>
+          <label for="url" class="form-label">Upload Image</label>
           <br />
           <input
-            type="number"
-            name="listing[price]"
-            id="price"
-            placeholder="Enter Price"
+            type="file"
+            id="url"
+            name="listing[image]"
+            placeholder="Upload Image"
             class="form-control"
-            min="1"
-            step="1"
             required
           />
-          <div class="invalid-feedback">Please enter valid Price.</div>
-          <div class="valid-feedback">Looks Good</div>
         </div>
         <br /><br />
-        <div class="col-md-6 ml-3 mr-3 p-3">
-          <label for="location" class="form-label">Location</label>
+        <div class="row">
+          <div class="col-md-6 ml-3 mr-3 p-3">
+            <label for="price" class="form-label">Price</label>
+            <br />
+            <input
+              type="number"
+              name="listing[price]"
+              id="price"
+              placeholder="Enter Price"
+              class="form-control"
+              min="1"
+              step="1"
+              required
+            />
+            <div class="invalid-feedback">Please enter valid Price.</div>
+            <div class="valid-feedback">Looks Good</div>
+          </div>
+          <br /><br />
+          <div class="col-md-6 ml-3 mr-3 p-3">
+            <label for="location" class="form-label">Location</label>
+            <br />
+            <input
+              type="text"
+              id="location"
+              name="listing[location]"
+              placeholder="Enter Location"
+              class="form-control"
+              pattern="^[a-zA-Z ]+$"
+              required
+            />
+            <div class="invalid-feedback">Please enter a valid Location.</div>
+            <div class="valid-feedback">Looks Good</div>
+          </div>
+          <br /><br />
+        </div>
+        <br /><br />
+        <div class="">
+          <label for="country" class="form-label">Country</label>
           <br />
           <input
             type="text"
-            id="location"
-            name="listing[location]"
-            placeholder="Enter Location"
+            id="country"
+            name="listing[country]"
+            placeholder="Enter Country"
             class="form-control"
             pattern="^[a-zA-Z ]+$"
             required
           />
-          <div class="invalid-feedback">Please enter a valid Location.</div>
+          <div class="invalid-feedback">Please enter a valid Country.</div>
           <div class="valid-feedback">Looks Good</div>
         </div>
         <br /><br />
-      </div>
-      <br /><br />
-      <div class="">
-        <label for="country" class="form-label">Country</label>
-        <br />
-        <input
-          type="text"
-          id="country"
-          name="listing[country]"
-          placeholder="Enter Country"
-          class="form-control"
-          pattern="^[a-zA-Z ]+$"
-          required
-        />
-        <div class="invalid-feedback">Please enter a valid Country.</div>
-        <div class="valid-feedback">Looks Good</div>
-      </div>
-      <br /><br />
-      <div class="button-container">
-        <button class="btn btn-outline-dark" type="submit">
-          Submit Listing
-        </button>
-        <a href="/listings"
-          ><button type="button" class="btn btn-outline-dark">
-            Back to Listings
-          </button></a
-        >
-      </div>
-    </form>
+        <div class="button-container">
+          <button class="btn btn-outline-dark" type="submit">
+            Submit Listing
+          </button>
+          <a href="/listings"
+            ><button type="button" class="btn btn-outline-dark">
+              Back to Listings
+            </button></a
+          >
+        </div>
+      </form>
+      <br />
+    </div>
   </div>
 </body>

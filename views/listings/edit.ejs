@@ -1,49 +1,52 @@
 <% layout("/layouts/boilerplate.ejs") %>
 <body>
-  <h3>Edit Your Listing</h3>
-  <div class="col-8 mx-auto mt-3">
-    <form
-      action="/listings/<%= editListing.id %>?_method=PUT"
-      method="POST"
-      class="needs-validation"
-      enctype="multipart/form-data"
-      novalidate
-    >
-      <div>
-        <label for="title" class="form-label">Title</label>
-        <br />
-        <input
-          type="text"
-          id="title"
-          name="listing[title]"
-          value="<%= editListing.title %>"
-          class="form-control"
-          pattern="^[a-zA-Z0-9 ]+$"
-          required
-        />
-        <div class="invalid-feedback">Please enter a title.</div>
-        <div class="valid-feedback">Looks Good</div>
-      </div>
-      <br /><br />
-      <div>
-        <label for="description" class="form-label">Description</label>
-        <br />
-        <textarea
-          id="description"
-          name="listing[description]"
-          rows="5"
-          cols="100"
-          class="form-control"
-          pattern="^[a-zA-Z0-9\\s,.!?]+$"
-          required
-        >
+  <div
+    class="col-10 mx-auto mt-3 text-center p-1 border border-dark-subtle rounded-3 border-opacity-10"
+  >
+    <h3 class="mt-3">Edit Your Listing</h3>
+    <div class="col-8 mx-auto mt-3">
+      <form
+        action="/listings/<%= editListing.id %>?_method=PUT"
+        method="POST"
+        class="needs-validation"
+        enctype="multipart/form-data"
+        novalidate
+      >
+        <div>
+          <label for="title" class="form-label">Title</label>
+          <br />
+          <input
+            type="text"
+            id="title"
+            name="listing[title]"
+            value="<%= editListing.title %>"
+            class="form-control"
+            pattern="^[a-zA-Z0-9 ]+$"
+            required
+          />
+          <div class="invalid-feedback">Please enter a title.</div>
+          <div class="valid-feedback">Looks Good</div>
+        </div>
+        <br /><br />
+        <div>
+          <label for="description" class="form-label">Description</label>
+          <br />
+          <textarea
+            id="description"
+            name="listing[description]"
+            rows="5"
+            cols="100"
+            class="form-control"
+            pattern="^[a-zA-Z0-9\\s,.!?]+$"
+            required
+          >
 <%= editListing.description %></textarea
-        >
-        <div class="invalid-feedback">Please enter a Description.</div>
-        <div class="valid-feedback">Looks Good</div>
-      </div>
-      <br /><br />
-      <!-- <div>
+          >
+          <div class="invalid-feedback">Please enter a Description.</div>
+          <div class="valid-feedback">Looks Good</div>
+        </div>
+        <br /><br />
+        <!-- <div>
         <label for="filename" class="form-label">Image name</label>
         <br />
         <input
@@ -56,83 +59,87 @@
         <div class="valid-feedback">Looks Good</div>
       </div>
       <br /><br /> -->
-      <div
-        class="col-8 mx-auto mt-3 text-center p-1 border border-dark-subtle rounded-3 border-opacity-10"
-      >
-        <div class="imgpreview p-1 border border-dark-subtle rounded-3">
-          <img src="<%=editListing.image.url%>" alt="" width="250rem" />
-        </div>
-        <br />
-        <br />
-        <h6>Current Image</h6>
-      </div>
-      <br /><br />
-      <div>
-        <label for="url" class="form-label">Upload New Image</label>
-        <br />
-        <input
-          type="file"
-          id="url"
-          name="listing[image]"
-          class="form-control"
-        />
-      </div>
-      <br /><br />
-      <div class="row">
-        <div class="col-md-6 ml-3 mr-3 p-3">
-          <label for="price" class="form-label">Price</label>
+        <div
+          class="col-8 mx-auto mt-3 text-center p-1 border border-dark-subtle rounded-3 border-opacity-10"
+        >
+          <div class="imgpreview p-1 border border-dark-subtle rounded-3">
+            <img src="<%=editListing.image.url%>" alt="" width="250rem" />
+          </div>
           <br />
-          <input
-            type="number"
-            name="listing[price]"
-            id="price"
-            value="<%= editListing.price %>"
-            class="form-control"
-            min="1"
-            step="1"
-            required
-          />
-          <div class="invalid-feedback">Please enter valid Price.</div>
-          <div class="valid-feedback">Looks Good</div>
+          <br />
+          <h6>Current Image</h6>
         </div>
         <br /><br />
-        <div class="col-md-6 ml-3 mr-3 p-3">
-          <label for="location" class="form-label">Location</label>
+        <div>
+          <label for="url" class="form-label">Upload New Image</label>
+          <br />
+          <input
+            type="file"
+            id="url"
+            name="listing[image]"
+            class="form-control"
+          />
+        </div>
+        <br /><br />
+        <div class="row">
+          <div class="col-md-6 ml-3 mr-3 p-3">
+            <label for="price" class="form-label">Price</label>
+            <br />
+            <input
+              type="number"
+              name="listing[price]"
+              id="price"
+              value="<%= editListing.price %>"
+              class="form-control"
+              min="1"
+              step="1"
+              required
+            />
+            <div class="invalid-feedback">Please enter valid Price.</div>
+            <div class="valid-feedback">Looks Good</div>
+          </div>
+          <br /><br />
+          <div class="col-md-6 ml-3 mr-3 p-3">
+            <label for="location" class="form-label">Location</label>
+            <br />
+            <input
+              type="text"
+              id="location"
+              name="listing[location]"
+              value="<%= editListing.location %>"
+              class="form-control"
+              pattern="^[a-zA-Z ]+$"
+              required
+            />
+            <div class="invalid-feedback">Please enter a valid Location.</div>
+            <div class="valid-feedback">Looks Good</div>
+          </div>
+        </div>
+        <br /><br />
+        <div>
+          <label for="country" class="form-label">Country</label>
           <br />
           <input
             type="text"
-            id="location"
-            name="listing[location]"
-            value="<%= editListing.location %>"
+            id="country"
+            name="listing[country]"
+            value="<%= editListing.country %>"
             class="form-control"
             pattern="^[a-zA-Z ]+$"
             required
           />
-          <div class="invalid-feedback">Please enter a valid Location.</div>
+          <div class="invalid-feedback">Please enter a valid Country.</div>
           <div class="valid-feedback">Looks Good</div>
         </div>
-      </div>
-      <br /><br />
-      <div>
-        <label for="country" class="form-label">Country</label>
-        <br />
-        <input
-          type="text"
-          id="country"
-          name="listing[country]"
-          value="<%= editListing.country %>"
-          class="form-control"
-          pattern="^[a-zA-Z ]+$"
-          required
-        />
-        <div class="invalid-feedback">Please enter a valid Country.</div>
-        <div class="valid-feedback">Looks Good</div>
-      </div>
-      <br /><br />
-      <button type="submit" class="btn btn-outline-dark">Submit Listing</button>
-      <a href="/listings"
-        ><button type="button" class="btn btn-outline-dark">Cancel</button></a
-      >
-    </form>
+        <br /><br />
+        <button type="submit" class="btn btn-outline-dark">
+          Submit Listing
+        </button>
+        <a href="/listings"
+          ><button type="button" class="btn btn-outline-dark">Cancel</button></a
+        >
+      </form>
+      <br />
+    </div>
   </div>
 </body>
