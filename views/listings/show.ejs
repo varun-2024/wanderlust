@@ -3,12 +3,16 @@
   <div class="show-container">
     <h3><%= showListing.title %></h3>
     <div class="card mb-3 col-8 mx-auto mt-3">
-      <img
-        src="<%= showListing.image.url %>"
-        class="card-img-top"
-        alt="listing_image"
-        style="height: 30rem; object-fit: cover"
-      />
+      <div
+        class="col-12 mx-auto mt-3 text-center p-1 border border-dark-subtle rounded-3 border-opacity-10"
+      >
+        <img
+          src="<%= showListing.image.url %>"
+          class="card-img-top"
+          alt="listing_image"
+          style="height: 30rem; object-fit: cover"
+        />
+      </div>
       <div class="card-body">
         <h5 class="card-title"><%= showListing.title %></h5>
         <p class="card-text">

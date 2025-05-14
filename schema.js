@@ -8,7 +8,7 @@ module.exports.listingSchema = Joi.object({
       .pattern(new RegExp("^[a-zA-Z0-9\\s,.!?]+$"))
       .required(),
     image: Joi.object({
-      filename: Joi.string().required(),
+      filename: Joi.string(), //.required()
       url: Joi.string().uri(), //.required()
     }).required(),
     price: Joi.number().integer().min(1).required(),

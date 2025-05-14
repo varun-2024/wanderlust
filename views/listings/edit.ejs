@@ -6,6 +6,7 @@
       action="/listings/<%= editListing.id %>?_method=PUT"
       method="POST"
       class="needs-validation"
+      enctype="multipart/form-data"
       novalidate
     >
       <div>
@@ -42,31 +43,38 @@
         <div class="valid-feedback">Looks Good</div>
       </div>
       <br /><br />
-      <div>
+      <!-- <div>
         <label for="filename" class="form-label">Image name</label>
         <br />
         <input
           type="text"
           id="filename"
           name="listing[image][filename]"
-          value="<%= editListing.image.filename %>"
           class="form-control"
-          required
         />
         <div class="invalid-feedback">Please enter image name.</div>
         <div class="valid-feedback">Looks Good</div>
       </div>
+      <br /><br /> -->
+      <div
+        class="col-8 mx-auto mt-3 text-center p-1 border border-dark-subtle rounded-3 border-opacity-10"
+      >
+        <div class="imgpreview p-1 border border-dark-subtle rounded-3">
+          <img src="<%=editListing.image.url%>" alt="" width="250rem" />
+        </div>
+        <br />
+        <br />
+        <h6>Current Image</h6>
+      </div>
       <br /><br />
       <div>
-        <label for="url" class="form-label">Image URL</label>
+        <label for="url" class="form-label">Upload New Image</label>
         <br />
         <input
-          type="text"
+          type="file"
           id="url"
-          name="listing[image][url]"
-          value="<%= editListing.image.url %>"
+          name="listing[image]"
           class="form-control"
-          required
         />
       </div>
       <br /><br />

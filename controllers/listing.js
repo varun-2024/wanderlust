@@ -51,6 +51,7 @@ module.exports.renderEditForm = async (req, res) => {
 };
 
 module.exports.updateListings = async (req, res) => {
+  console.log("Update Listing PUT request Received");
   if (!req.body.listing) {
     throw new ExpressError(400, "Send Valid data for Listing");
   }
@@ -63,6 +64,13 @@ module.exports.updateListings = async (req, res) => {
       new: true,
     }
   );
+  if (typeof req.file !== "undefined" /* && req.file !== null */) {
+    let url = req.file.path;
+    let filename = req.file.filename;
+    console.log(url, "...", filename);
+    updatedListing.image = { filename, url };
+    await updatedListing.save();
+  }
   console.log("Updated Listing:", updatedListing);
   req.flash("success", "Listing Updated Successfully!");
   res.redirect(`/listings/${id}`);
