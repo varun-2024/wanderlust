@@ -198,6 +198,10 @@ img {
   border-radius: 0.5rem;
 }
 
+#map {
+  height: 250px;
+}
+
 /* @media (max-width: 768px) {
   .navrow {
     flex-direction: column;
