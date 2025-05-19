@@ -15,14 +15,16 @@ module.exports.isLoggedIn = (req, res, next) => {
     req.flash("error", "You must Login to create a Listing");
     return res.redirect("/login");
   }
+  console.log("isLoggedIn passed, calling next()");
   next();
 };
 
 module.exports.saveRedirectUrl = (req, res, next) => {
-  console.log("Inside sveRedirectUrl Middleware: ");
+  console.log("Inside saveRedirectUrl Middleware: ");
   if (req.session.redirectUrl) {
     res.locals.redirectUrl = req.session.redirectUrl;
   }
+  console.log("saveRedirectUrl passed, calling next()");
   next();
 };
 
@@ -36,6 +38,7 @@ module.exports.isOwner = async (req, res, next) => {
     /* let redirectUrl = res.locals.redirectUrl || "/listings";
         res.redirect(redirectUrl); */
   }
+  console.log("isOwner passed, calling next()");
   next();
 };
 
@@ -48,6 +51,7 @@ module.exports.validateListing = (req, res, next) => {
     return next(new ExpressError(400, msg));
     //return next(new ExpressError(400, error));
   }
+  console.log("validateListing passed, calling next()");
   next();
 };
 
@@ -60,6 +64,7 @@ module.exports.validateReviews = (req, res, next) => {
     const msg = error.details.map((el) => el.message).join(",");
     return next(new ExpressError(400, msg));
   }
+  console.log("validateReviews passed, calling next()");
   next();
 };
 
@@ -73,5 +78,6 @@ module.exports.isReviewAuthor = async (req, res, next) => {
     /* let redirectUrl = res.locals.redirectUrl || "/listings";
         res.redirect(redirectUrl); */
   }
+
   next();
 };

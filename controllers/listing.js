@@ -1,3 +1,21 @@
+const axios = require("axios");
+async function geocodeLocation(location) {
+  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+    location
+  )}`;
+  const response = await axios.get(url, {
+    headers: { "User-Agent": "wanderlust-app" },
+  });
+  console.log("Geocode API response for:", location, response.data);
+  if (response.data && response.data.length > 0) {
+    return {
+      lat: parseFloat(response.data[0].lat),
+      lng: parseFloat(response.data[0].lon),
+    };
+  }
+  return { lat: 0, lng: 0 };
+}
+
 const Listing = require("../models/listing");
 module.exports.index = async (req, res) => {
   const allListings = await Listing.find({});
@@ -18,6 +36,7 @@ module.exports.showListings = async (req, res, next) => {
     req.flash("error", "Sorry, Listing Does Not Exist!");
     return res.redirect("/listings");
   }
+
   console.log("Listing :", showListing);
   res.render("listings/show.ejs", { showListing });
 };
@@ -34,6 +53,20 @@ module.exports.createListings = async (req, res) => {
   console.log("Req User : ", req.user);
   newListing.owner = req.user._id;
   newListing.image = { filename, url };
+
+  const location = req.body.listing.location + ", " + req.body.listing.country;
+  const coords = await geocodeLocation(location);
+  if (coords.lat === 0 && coords.lng === 0) {
+    req.flash(
+      "error",
+      "Could not geocode the location. Please enter a more specific address."
+    );
+    return res.redirect("/listings/new");
+  }
+  newListing.geometry = {
+    type: "Point",
+    coordinates: [coords.lng, coords.lat],
+  };
   await newListing.save();
   console.log("New Listing Created:", newListing);
   req.flash("success", "New Listing Created!");

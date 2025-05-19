@@ -109,7 +109,7 @@
               name="listing[location]"
               placeholder="Enter Location"
               class="form-control"
-              pattern="^[a-zA-Z ]+$"
+              pattern="^[a-zA-Z0-9\\s,.!?]+$"
               required
             />
             <div class="invalid-feedback">Please enter a valid Location.</div>
@@ -127,7 +127,7 @@
             name="listing[country]"
             placeholder="Enter Country"
             class="form-control"
-            pattern="^[a-zA-Z ]+$"
+            pattern="^[a-zA-Z0-9\\s,.!?]+$"
             required
           />
           <div class="invalid-feedback">Please enter a valid Country.</div>
