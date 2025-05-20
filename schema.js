@@ -12,8 +12,8 @@ module.exports.listingSchema = Joi.object({
       url: Joi.string().uri(), //.required()
     }).required(),
     price: Joi.number().integer().min(1).required(),
-    location: Joi.string().pattern(new RegExp("^[a-zA-Z ]+$")).required(),
-    country: Joi.string().pattern(new RegExp("^[a-zA-Z ]+$")).required(),
+    location: Joi.string().pattern(new RegExp("^[a-zA-Z0-9\\s,]+$")).required(),
+    country: Joi.string().pattern(new RegExp("^[a-zA-Z0-9\\s,]+$")).required(),
   }).required(),
 });
 

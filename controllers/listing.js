@@ -8,6 +8,7 @@ async function geocodeLocation(location) {
   });
   console.log("Geocode API response for:", location, response.data);
   if (response.data && response.data.length > 0) {
+    console.log("This is Response Data: ", response);
     return {
       lat: parseFloat(response.data[0].lat),
       lng: parseFloat(response.data[0].lon),
