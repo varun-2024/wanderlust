@@ -64,8 +64,9 @@ body {
 }
 .fa-compass {
   color: #fe424d;
-  font-size: 2rem;
-  margin-left: 1rem;
+  font-size: 2.5rem;
+  margin-top: 0.25rem;
+  //margin-left: 1rem;
 }
 .nav-link {
   font-size: 1.25rem !important;
@@ -118,7 +119,8 @@ body {
 }
 .card {
   border: none !important;
-  //box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 5rem;
 
   margin: 1rem;
 }
@@ -202,13 +204,48 @@ img {
   height: 350px;
 }
 
-/* @media (max-width: 768px) {
-  .navrow {
+#filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+.filter {
+  margin-top: 1rem;
+  text-align: center;
+  opacity: 0.7;
+}
+.filter:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+#logout {
+  color: #fe424d !important;
+}
+#logout:hover {
+  color: #222222 !important;
+}
+
+.wanderlust a {
+  position: absolute;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fe424d !important;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  /*  .navrow {
     flex-direction: column;
     align-items: flex-start;
   }
   .menuclose {
     flex-direction: column;
     align-items: flex-start;
+  } */
+  .wanderlust a {
+    display: none;
   }
-} */
+}
