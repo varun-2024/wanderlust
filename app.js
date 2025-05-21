@@ -116,10 +116,10 @@ app.use((req, res, next) => {
 /* ----------------------------------------------------------------------------------------- */
 
 //Root Get Path
-app.get("/", (req, res) => {
+/* app.get("/", (req, res) => {
   //console.dir(req.cookies);
   res.send("Welcome to Home Page");
-});
+}); */
 
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
