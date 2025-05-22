@@ -1,3 +1,22 @@
+.dark-mode {
+  background-color: #222222;
+  color: #ffffff;
+  .btn {
+    background-color: #ffffff;
+    color: #222222;
+  }
+  .pvtltd {
+    color: #222222 !important;
+  }
+  .card-body {
+    background-color: #222222;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
+  }
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -236,6 +255,14 @@ img {
   margin-top: 0.5rem;
 }
 
+/* .editwadd {
+  position: absolute;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fe424d !important;
+  margin-top: 0.5rem;
+} */
+
 @media (max-width: 768px) {
   /*  .navrow {
     flex-direction: column;
@@ -249,3 +276,17 @@ img {
     display: none;
   }
 }
+
+/* @media (max-width: 768px) {
+  .wanderlust a {
+    display: none;
+  }
+  .editw {
+    display: block !important;
+  }
+}
+@media (min-width: 769px) {
+  .editw {
+    display: none !important;
+  }
+} */

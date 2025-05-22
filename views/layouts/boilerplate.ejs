@@ -42,5 +42,36 @@
     <script src="/js/popper.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/script.js"></script>
+    <script>
+      // Dark mode toggle
+      const darkModeToggle = document.getElementById("darkModeToggle");
+
+      //const footer = document.querySelector(".footer");
+      //const navbar = document.querySelector(".navbar");
+      if (darkModeToggle) {
+        // Load preference
+        if (localStorage.getItem("darkMode") === "enabled") {
+          document.body.classList.add("dark-mode");
+        }
+        darkModeToggle.addEventListener("click", () => {
+          document.body.classList.toggle("dark-mode");
+
+          // Save preference
+          if (document.body.classList.contains("dark-mode")) {
+            localStorage.setItem("darkMode", "enabled");
+          } else {
+            localStorage.setItem("darkMode", "disabled");
+          }
+        });
+      }
+    </script>
+    <!-- <script>
+      const editw = document.querySelector(".editw");
+      if (window.innerWidth <= 768 && editw) {
+        editw.innerHTML = `<a class="editwadd" href="/listings">W</a>`;
+      }
+    </script> -->
   </body>
 </html>
+<!-- document.querySelector(".footer").classList.toggle("dark-mode");
+          document.querySelector(".navbar").classList.toggle("dark-mode"); -->
