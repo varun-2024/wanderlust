@@ -248,12 +248,13 @@ img {
   color: #222222 !important;
 }
 
-.wanderlust a {
+.wanderlust h1 {
   position: absolute;
   font-size: 2rem;
   font-weight: bold;
   color: #fe424d !important;
   margin-top: 0.5rem;
+  cursor: pointer;
 }
 
 .displaycard {
@@ -281,7 +282,7 @@ img {
     flex-direction: column;
     align-items: flex-start;
   } */
-  .wanderlust a {
+  .wanderlust h1 {
     display: none;
   }
 }
