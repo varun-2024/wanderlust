@@ -229,6 +229,7 @@ img {
   justify-content: center;
   align-items: center;
   gap: 1.5rem;
+  overflow: scroll;
 }
 .filter {
   margin-top: 1rem;
@@ -253,6 +254,14 @@ img {
   font-weight: bold;
   color: #fe424d !important;
   margin-top: 0.5rem;
+}
+
+.displaycard {
+  text-decoration: none;
+}
+
+.tax-info {
+  display: none;
 }
 
 /* .editwadd {

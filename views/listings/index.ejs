@@ -54,9 +54,9 @@
             class="form-check-input"
             type="checkbox"
             role="switch"
-            id="switchCheckDefault"
+            id="taxswitchCheckDefault"
           />
-          <label class="form-check-label" for="switchCheckDefault"
+          <label class="form-check-label" for="taxswitchCheckDefault"
             >Tax Switch</label
           >
         </div>
@@ -65,8 +65,8 @@
     <!-- row row-cols-lg-3 row-cols-md-2 mt-3 row-cols-sm-1 row-cols-xs-1 -->
     <div class="d-flex flex-wrap justify-content-center">
       <% for(let listings of allListings) {%>
-      <a href="/listings/<%=listings._id%>"
-        ><div class="card" style="width: 20rem; height: 30rem">
+      <a class="displaycard" href="/listings/<%=listings._id%>"
+        ><div class="card" style="width: 20rem; height: 31rem">
           <img
             src="<%=listings.image.url%>"
             class="card-img-top"
@@ -87,8 +87,10 @@
               <%=listings.location%>, <%=listings.country%>
               <br />
             </p>
-          </div></div
-      ></a>
+            <i class="tax-info">+20% VAT</i>
+          </div>
+        </div></a
+      >
       <% } %>
     </div>
 
@@ -98,4 +100,17 @@
     <% } %>
   </ul> -->
   </div>
+  <script>
+    const taxswitch = document.querySelector("#taxswitchCheckDefault");
+    taxswitch.addEventListener("click", () => {
+      let taxinfo = document.querySelectorAll(".tax-info");
+      taxinfo.forEach((item) => {
+        if (item.style.display !== "block") {
+          item.style.display = "block";
+        } else {
+          item.style.display = "none";
+        }
+      });
+    });
+  </script>
 </body>
