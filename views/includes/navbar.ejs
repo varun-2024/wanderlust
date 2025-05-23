@@ -34,16 +34,17 @@
       <div class="navrow navbar-nav me-auto">
         <a class="nav-link" aria-current="page" href="/listings">Explore</a>
       </div>
-      <div>
+      <div class="wanderlust-container">
         <div
           class="wanderlust d-flex justify-content-center align-items-center"
         >
           <h1 class="navbar-brand">WanderLust</h1>
         </div>
+        <div class="search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
       </div>
-      <!-- <div class="wanderlust">
-        <i class="fa-solid fa-magnifying-glass"></i>
-      </div> -->
+
       <div class="navrow navbar-nav ms-auto">
         <a class="nav-link" href="/listings/new">List Property</a>
         <% if(!currUser){%>
@@ -57,64 +58,80 @@
   </div>
   <script>
     const wanderSearch = document.querySelector(".wanderlust");
+    const search = document.querySelector(".search");
 
-    // Add event listener to the document instead
-    document.addEventListener("click", function (e) {
+    // Show search icon on hover over wanderlust
+    wanderSearch.addEventListener("mouseenter", () => {
+      if (!wanderSearch.classList.contains("active")) {
+        wanderSearch.classList.add("hidden");
+        search.style.display = "block";
+      }
+    });
+
+    // Handle search icon click
+    search.addEventListener("click", () => {
+      wanderSearch.classList.add("active");
+      wanderSearch.innerHTML = `
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+                <button class="btn btn-outline-success m-1" type="submit">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                <button class="cancelsearch btn btn-outline-danger m-1" type="button">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </form>
+        `;
+      wanderSearch.classList.remove("hidden");
+      search.style.display = "none";
+    });
+
+    // Handle cancel button click using event delegation
+    document.addEventListener("click", (e) => {
       const cancelButton = e.target.closest(".cancelsearch");
       if (cancelButton) {
-        if (wanderSearch.classList.contains("active")) {
-          wanderSearch.innerHTML = `<h1 class="navbar-brand">WanderLust</h1>`;
-          wanderSearch.classList.remove("active");
-        }
-      }
-    });
-
-    wanderSearch.addEventListener("click", () => {
-      if (!wanderSearch.classList.contains("active")) {
-        wanderSearch.classList.add("active");
-        wanderSearch.innerHTML = `<form class="d-flex" role="search">
-          <input
-            class="form-control me-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-          <button class="btn btn-outline-success m-1" type="submit">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </button>
-          <button class="cancelsearch btn btn-outline-danger m-1" type="button">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        </form>`;
-      }
-    });
-  </script>
-
-  <!--   <script>
-    const wanderSearch = document.querySelector(".wanderlust");
-    wanderSearch.addEventListener("click", () => {
-      if (!wanderSearch.classList.contains("active")) {
-        wanderSearch.classList.add("active");
-        wanderSearch.innerHTML = `<form class="d-flex" role="search">
-          <input
-            class="form-control me-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-          <button class="btn btn-outline-success m-1" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-          <button class="cancelsearch btn btn-outline-danger m-1" type="button"><i class="fa-solid fa-xmark"></i></button>
-        </form>`;
-      }
-    });
-    const cancelSearch = document.querySelector(".cancelsearch");
-    cancelSearch.addEventListener("click", () => {
-      if (wanderSearch.classList.contains("active")) {
-        wanderSearch.innerHTML = `<h1 class="navbar-brand">WanderLust</h1>`;
         wanderSearch.classList.remove("active");
+        wanderSearch.innerHTML = `<h1 class="navbar-brand">WanderLust</h1>`;
+        wanderSearch.classList.remove("hidden");
+        search.style.display = "none";
       }
     });
-  </script> -->
+
+    // Handle mouse leave from search icon - hide it if search is not active
+    search.addEventListener("mouseleave", () => {
+      if (!wanderSearch.classList.contains("active")) {
+        wanderSearch.classList.remove("hidden");
+        search.style.display = "none";
+      }
+    });
+
+    // Also handle mouse leave from the container to ensure smooth UX
+    const container = document.querySelector(".wanderlust-container");
+    container.addEventListener("mouseleave", () => {
+      if (!wanderSearch.classList.contains("active")) {
+        wanderSearch.classList.remove("hidden");
+        search.style.display = "none";
+      }
+    });
+
+    // Dark mode toggle
+    const darkModeToggle = document.getElementById("darkModeToggle");
+    if (darkModeToggle) {
+      // Load preference
+      if (localStorage.getItem("darkMode") === "enabled") {
+        document.body.classList.add("dark-mode");
+      }
+      darkModeToggle.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+        // Save preference
+        if (document.body.classList.contains("dark-mode")) {
+          localStorage.setItem("darkMode", "enabled");
+        } else {
+          localStorage.setItem("darkMode", "disabled");
+        }
+      });
+    }
+  </script>
 </nav>
 
 <!-- const darkModeToggle = document.getElementById("darkModeToggle");

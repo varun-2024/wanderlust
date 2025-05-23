@@ -248,14 +248,14 @@ img {
   color: #222222 !important;
 }
 
-.wanderlust h1 {
+/* .wanderlust h1 {
   position: absolute;
   font-size: 2rem;
   font-weight: bold;
   color: #fe424d !important;
   margin-top: 0.5rem;
   cursor: pointer;
-}
+} */
 
 .displaycard {
   text-decoration: none;
@@ -271,6 +271,52 @@ img {
   font-weight: bold;
   color: #fe424d !important;
   margin-top: 0.5rem;
+} */
+
+/* .wanderlust-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wanderlust {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
+
+/* .wanderlust {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
+
+/* .wanderlust h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fe424d !important;
+  margin-top: 0.5rem;
+  cursor: pointer;
+}
+
+.search {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  cursor: pointer;
+}
+
+.search i {
+  font-size: 2rem;
+  color: #fe424d;
+}
+
+.hidden {
+  display: none !important;
 } */
 
 @media (max-width: 768px) {
@@ -300,3 +346,46 @@ img {
     display: none !important;
   }
 } */
+
+.wanderlust-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 200px; /* Prevent container collapse */
+}
+
+.wanderlust {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s ease;
+}
+
+.wanderlust h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fe424d !important;
+  margin-top: 0.5rem;
+  cursor: pointer;
+}
+
+.search {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.search i {
+  font-size: 2rem;
+  color: #fe424d;
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
