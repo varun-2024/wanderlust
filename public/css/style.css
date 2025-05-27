@@ -225,20 +225,63 @@ img {
 
 #filters {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
   align-items: center;
   gap: 1.5rem;
-  overflow: scroll;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 1rem 0.5rem;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
 }
+
+#filters::-webkit-scrollbar {
+  height: 4px;
+}
+
+#filters::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#filters::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+}
+
+#filters::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+
 .filter {
   margin-top: 1rem;
   text-align: center;
   opacity: 0.7;
+  flex-shrink: 0;
+  min-width: 60px;
+  padding: 0.5rem;
+  transition: opacity 0.2s ease;
 }
+
 .filter:hover {
   opacity: 1;
   cursor: pointer;
+}
+
+.filter div {
+  margin-bottom: 0.25rem;
+}
+
+.filter p {
+  margin: 0;
+  font-size: 0.8rem;
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+.tax-toggle {
+  flex-shrink: 0; /* Prevent tax toggle from shrinking */
+  margin-left: auto; /* Push to the right end */
+  margin-top: 1rem;
 }
 
 #logout {
@@ -330,6 +373,33 @@ img {
   } */
   .wanderlust h1 {
     display: none;
+  }
+  #filters {
+    gap: 1rem; /* Smaller gap on mobile */
+    padding: 1rem 0.25rem;
+  }
+
+  .filter {
+    min-width: 50px;
+    padding: 0.25rem;
+  }
+
+  .filter p {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #filters {
+    gap: 0.75rem;
+  }
+
+  .filter {
+    min-width: 45px;
+  }
+
+  .filter p {
+    font-size: 0.65rem;
   }
 }
 
