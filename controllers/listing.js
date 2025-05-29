@@ -92,22 +92,29 @@ module.exports.updateListings = async (req, res) => {
     throw new ExpressError(400, "Send Valid data for Listing");
   }
   const { id } = req.params;
-  console.log(req.body.listing);
+
+  // Convert single category to array if needed
+  if (req.body.listing.category && !Array.isArray(req.body.listing.category)) {
+    req.body.listing.category = [req.body.listing.category];
+  }
+  // If no categories selected, set empty array
+  if (!req.body.listing.category) {
+    req.body.listing.category = [];
+  }
+
   const updatedListing = await Listing.findByIdAndUpdate(
     id,
     { ...req.body.listing },
-    {
-      new: true,
-    }
+    { new: true }
   );
-  if (typeof req.file !== "undefined" /* && req.file !== null */) {
+
+  if (typeof req.file !== "undefined") {
     let url = req.file.path;
     let filename = req.file.filename;
-    console.log(url, "...", filename);
     updatedListing.image = { filename, url };
     await updatedListing.save();
   }
-  console.log("Updated Listing:", updatedListing);
+
   req.flash("success", "Listing Updated Successfully!");
   res.redirect(`/listings/${id}`);
 };

@@ -80,6 +80,28 @@
             class="form-control"
           />
         </div>
+        <br />
+        <div class="checkbox-container">
+          <label for="category" class="form-label">Category</label>
+          <div
+            class="d-flex flex-wrap flex-row border rounded-3 border-opacity-10"
+            style="justify-content: space-around"
+          >
+            <% const categories = ["trending", "rooms", "cities", "mountains",
+            "castles", "pools", "camping", "farms", "arctic", "beaches"]; %> <%
+            categories.forEach(category => { %>
+            <div class="<%= category.replace(' ', '-') %> p-3">
+              <input type="checkbox" id="<%= category %>"
+              name="listing[category]" value="<%= category %>" <%=
+              (editListing.category && editListing.category.includes(category))
+              ? 'checked' : '' %> />
+              <label for="<%= category %>">
+                <%= category.charAt(0).toUpperCase() + category.slice(1) %>
+              </label>
+            </div>
+            <% }); %>
+          </div>
+        </div>
         <br /><br />
         <div class="row">
           <div class="col-md-6 ml-3 mr-3 p-3">
@@ -108,7 +130,7 @@
               name="listing[location]"
               value="<%= editListing.location %>"
               class="form-control"
-              pattern="^[a-zA-Z ]+$"
+              pattern="^[a-zA-Z0-9\s,]+$"
               required
             />
             <div class="invalid-feedback">Please enter a valid Location.</div>

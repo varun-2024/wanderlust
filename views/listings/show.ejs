@@ -25,8 +25,17 @@
         </p>
         <p class="card-text lead"><%= showListing.description %></p>
         <p><b>£<%= showListing.price.toLocaleString("en-GB") %></b></p>
+        <div class="d-flex flex-wrap gap-2">
+          <% for(category of showListing.category) { %>
+          <small class="border border-dark-subtle rounded-3 p-2">
+            <%= category.charAt(0).toUpperCase() + category.slice(1) %>
+          </small>
+          <% } %>
+        </div>
+        <br />
       </div>
     </div>
+    <br />
     <!-- <div class="card">
       <h4>Title: <%= showListing.title %></h4>
       <p>Description: <%= showListing.description %></p>

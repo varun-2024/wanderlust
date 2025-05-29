@@ -15,17 +15,22 @@ module.exports.listingSchema = Joi.object({
     location: Joi.string().pattern(new RegExp("^[a-zA-Z0-9\\s,]+$")).required(),
     country: Joi.string().pattern(new RegExp("^[a-zA-Z0-9\\s,]+$")).required(),
   }).required(),
-  category: Joi.string()
-    .valid(
-      "trending",
-      "rooms",
-      "iconic cities",
-      "beaches",
-      "adventure",
-      "cultural",
-      "luxury",
-      "budget"
+  category: Joi.array()
+    .items(
+      Joi.string().valid(
+        "trending",
+        "rooms",
+        "cities",
+        "mountains",
+        "castles",
+        "pools",
+        "camping",
+        "farms",
+        "arctic",
+        "beaches"
+      )
     )
+    .min(1)
     .required(),
 });
 
