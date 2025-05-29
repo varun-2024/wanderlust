@@ -140,8 +140,16 @@ body {
   border: none !important;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   height: 5rem;
-
   margin: 1rem;
+}
+.card:hover {
+  box-shadow: 5px 6px 10px rgba(0, 0, 0, 0.2);
+  transform: translate(2px, -2px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card img {
+  filter: blur(0.5px);
+  transition: opacity 0.3s ease, background-color 0.3s ease;
 }
 .card-img-top {
   width: 100%;
@@ -221,6 +229,10 @@ img {
 
 #map {
   height: 350px;
+}
+
+.filters-container {
+  margin: 1rem 3rem 1rem 3rem;
 }
 
 #filters {
@@ -387,6 +399,9 @@ img {
   .filter p {
     font-size: 0.7rem;
   }
+  .filters-container {
+    margin: 1rem 1rem 1rem 1rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -400,6 +415,9 @@ img {
 
   .filter p {
     font-size: 0.65rem;
+  }
+  .filters-container {
+    margin: 0.5rem 0.5rem 0.5rem 0.5rem;
   }
 }
 
