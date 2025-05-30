@@ -93,11 +93,11 @@ module.exports.updateListings = async (req, res) => {
   }
   const { id } = req.params;
 
-  // Convert single category to array if needed
+  // If single category not array Convert single category to array
   if (req.body.listing.category && !Array.isArray(req.body.listing.category)) {
     req.body.listing.category = [req.body.listing.category];
   }
-  // If no categories selected, set empty array
+  // If no categories selected, set empty it to array
   if (!req.body.listing.category) {
     req.body.listing.category = [];
   }
