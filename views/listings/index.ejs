@@ -117,4 +117,12 @@
       });
     });
   </script>
+  <script>
+    const filters = document.querySelectorAll(".filter");
+    filters.forEach((filter) => {
+      filter.addEventListener("click", () => {
+        console.log("Filter clicked:", filter.textContent);
+      });
+    });
+  </script>
 </body>
