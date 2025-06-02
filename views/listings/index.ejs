@@ -131,19 +131,59 @@
     const filters = document.querySelectorAll(".filter");
     const cards = document.querySelectorAll(".displaycard");
 
+    // Keep track of active filter
+    let activeFilter = null;
+
     filters.forEach((filter) => {
       filter.addEventListener("click", () => {
+        // Remove active class from previously selected filter
+        if (activeFilter) {
+          activeFilter.classList.remove("active");
+        }
+
+        // Add active class to current filter
+        filter.classList.add("active");
+        activeFilter = filter;
+
         const filterText = filter.textContent.trim().toLowerCase();
+
         cards.forEach((card) => {
-          const categories = JSON.parse(card.getAttribute("data-categories"));
-          // Show all if "All" is clicked
-          if (filterText === "all" || categories.includes(filterText)) {
+          try {
+            const categories = JSON.parse(card.getAttribute("data-categories"));
+
+            // Show all if "All" is clicked
+            if (filterText === "all") {
+              card.style.display = "block";
+            } else {
+              // Check if any category matches the filter
+              const hasMatch = categories.some(
+                (category) =>
+                  category.toLowerCase().includes(filterText) ||
+                  filterText.includes(category.toLowerCase())
+              );
+
+              card.style.display = hasMatch ? "block" : "none";
+            }
+          } catch (error) {
+            // Handle cases where data-categories might be malformed
+            console.warn("Error parsing categories for card:", card, error);
+            // Show card by default if there's an error
             card.style.display = "block";
-          } else {
-            card.style.display = "none";
           }
         });
       });
+    });
+
+    // Set "All" as default active filter on page load
+    document.addEventListener("DOMContentLoaded", () => {
+      const allFilter = Array.from(filters).find(
+        (filter) => filter.textContent.trim().toLowerCase() === "all"
+      );
+
+      if (allFilter) {
+        allFilter.classList.add("active");
+        activeFilter = allFilter;
+      }
     });
   </script>
 </body>

@@ -278,6 +278,15 @@ img {
 .filter:hover {
   opacity: 1;
   cursor: pointer;
+  background-color: #f8f9fa;
+  color: #fe424d;
+  border-radius: 0.5rem;
+}
+
+.filter.active {
+  color: #fe424d;
+  background-color: #f8f9fa;
+  border-radius: 20px;
 }
 
 .filter div {
