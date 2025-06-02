@@ -11,7 +11,11 @@
       class="filters-container border border-dark-subtle rounded-3 border-opacity-10"
     >
       <div id="filters" class="">
-        <div href="/" class="filter">
+        <div class="filter">
+          <div><i class="fa-solid fa-hotel"></i></div>
+          <p>All</p>
+        </div>
+        <div class="filter">
           <div><i class="fa-solid fa-fire"></i></div>
           <p>Trending</p>
         </div>
@@ -21,7 +25,7 @@
         </div>
         <div class="filter">
           <div><i class="fa-solid fa-mountain-city"></i></div>
-          <p>Iconic Cities</p>
+          <p>Cities</p>
         </div>
         <div class="filter">
           <div><i class="fa-solid fa-mountain-sun"></i></div>
@@ -67,35 +71,41 @@
       </div>
     </div>
     <!-- row row-cols-lg-3 row-cols-md-2 mt-3 row-cols-sm-1 row-cols-xs-1 -->
-    <div class="d-flex flex-wrap justify-content-center">
-      <% for(let listings of allListings) {%>
-      <a class="displaycard" href="/listings/<%=listings._id%>"
-        ><div class="card" style="width: 20rem; height: 31rem">
-          <img
-            src="<%=listings.image.url%>"
-            class="card-img-top"
-            alt="listing_image"
-            style="height: 20rem; object-fit: cover"
-          />
-          <div class="card-img-overlay">
-            <%=listings.title%>
-            <br />
-            £<%=listings.price.toLocaleString("en-GB")%> / night <br />
-          </div>
-          <div class="card-body">
-            <p class="card-text">
-              <strong
-                ><b class="listing-title"><%=listings.title%> <br /> </b
-              ></strong>
+    <div class="listings-container">
+      <div class="d-flex flex-wrap justify-content-center">
+        <% for(let listings of allListings) {%>
+        <a
+          class="displaycard"
+          href="/listings/<%= listings._id %>"
+          data-categories="<%= JSON.stringify(listings.category) %>"
+        >
+          <div class="card" style="width: 20rem; height: 31rem">
+            <img
+              src="<%=listings.image.url%>"
+              class="card-img-top"
+              alt="listing_image"
+              style="height: 20rem; object-fit: cover"
+            />
+            <div class="card-img-overlay">
+              <%=listings.title%>
               <br />
-              <%=listings.location%>, <%=listings.country%>
-              <br />
-            </p>
-            <i class="tax-info">+20% VAT</i>
-          </div>
-        </div></a
-      >
-      <% } %>
+              £<%=listings.price.toLocaleString("en-GB")%> / night <br />
+            </div>
+            <div class="card-body">
+              <p class="card-text">
+                <strong
+                  ><b class="listing-title"><%=listings.title%> <br /> </b
+                ></strong>
+                <br />
+                <%=listings.location%>, <%=listings.country%>
+                <br />
+              </p>
+              <i class="tax-info">+20% VAT</i>
+            </div>
+          </div></a
+        >
+        <% } %>
+      </div>
     </div>
 
     <!--   <ul class="list">
@@ -119,9 +129,20 @@
   </script>
   <script>
     const filters = document.querySelectorAll(".filter");
+    const cards = document.querySelectorAll(".displaycard");
+
     filters.forEach((filter) => {
       filter.addEventListener("click", () => {
-        console.log("Filter clicked:", filter.textContent);
+        const filterText = filter.textContent.trim().toLowerCase();
+        cards.forEach((card) => {
+          const categories = JSON.parse(card.getAttribute("data-categories"));
+          // Show all if "All" is clicked
+          if (filterText === "all" || categories.includes(filterText)) {
+            card.style.display = "block";
+          } else {
+            card.style.display = "none";
+          }
+        });
       });
     });
   </script>
