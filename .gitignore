@@ -1,3 +1,4 @@
 node_modules
 .env
 extracode.ejs
+validateReview.js
