@@ -12,7 +12,6 @@ console.log(process.env.SECRET);
 
 //Require Mongoose
 const mongoose = require("mongoose");
-//const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 const dbUrl = process.env.ATLASDB_URL;
 
 // Require Path
@@ -72,7 +71,7 @@ const MongoStore = require("connect-mongo");
 const store = MongoStore.create({
   mongoUrl: dbUrl,
   crypto: {
-    secret: "supersecretcode",
+    secret: process.env.SECRET,
   },
   touchAfter: 24 * 3600,
 });
@@ -85,7 +84,7 @@ store.on("connected", function () {
 });
 const sessionOptions = {
   store,
-  secret: "supersecretcode",
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {
