@@ -12,7 +12,8 @@ console.log(process.env.SECRET);
 
 //Require Mongoose
 const mongoose = require("mongoose");
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+//const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+const dbUrl = process.env.ATLASDB_URL;
 
 // Require Path
 const path = require("path");
@@ -65,9 +66,25 @@ const userRouter = require("./Routes/user.js");
 //Cookie-Parser Use
 app.use(cookieParser("secretcode"));
 
-// Express Session
+// Express Session & Mongo Session
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  crypto: {
+    secret: "supersecretcode",
+  },
+  touchAfter: 24 * 3600,
+});
+// Store Error & Login
+store.on("error", function (err) {
+  console.log("Session Store Error", err);
+});
+store.on("connected", function () {
+  console.log("Session Store Connected");
+});
 const sessionOptions = {
+  store,
   secret: "supersecretcode",
   resave: false,
   saveUninitialized: true,
@@ -95,7 +112,7 @@ main()
   });
 
 async function main() {
-  await mongoose.connect(MONGO_URL);
+  await mongoose.connect(dbUrl);
 }
 
 // Middleware for logging request details works for all routes and requests
