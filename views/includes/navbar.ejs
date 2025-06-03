@@ -72,12 +72,12 @@
     search.addEventListener("click", () => {
       wanderSearch.classList.add("active");
       wanderSearch.innerHTML = `
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+            <form class="d-flex" role="search" action="/listings/search" method="POST">
+                <input name="searchQuery" class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
                 <button class="btn btn-outline-success m-1" type="submit">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
-                <button class="cancelsearch btn btn-outline-danger m-1" type="button">
+                <button class="cancelsearch btn btn-outline-danger m-1" type="submit">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </form>

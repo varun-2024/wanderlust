@@ -2,7 +2,9 @@
 <body>
   <div class="show-container">
     <h3><%= showListing.title %></h3>
-    <div class="card mb-3 col-8 mx-auto mt-3">
+    <div
+      class="col-10 mx-auto mt-3 text-center p-1 border border-dark-subtle rounded-3 border-opacity-10"
+    >
       <div
         class="col-12 mx-auto text-center p-1 border border-dark-subtle rounded-3 border-opacity-10"
       >
@@ -25,7 +27,7 @@
         </p>
         <p class="card-text lead"><%= showListing.description %></p>
         <p><b>£<%= showListing.price.toLocaleString("en-GB") %></b></p>
-        <div class="d-flex flex-wrap gap-2">
+        <div class="d-flex flex-wrap gap-2 justify-content-center">
           <% for(category of showListing.category) { %>
           <small class="border border-dark-subtle rounded-3 p-2">
             <%= category.charAt(0).toUpperCase() + category.slice(1) %>
@@ -64,7 +66,7 @@
   <br />
   <br />
   <div
-    class="col-8 mx-auto mt-3 p-5 border border-dark-subtle rounded-3 border-opacity-10"
+    class="col-10 mx-auto mt-3 text-center p-1 border border-dark-subtle rounded-3 border-opacity-10"
     id="leavereview"
   >
     <% if(currUser){%>
@@ -95,7 +97,7 @@
           <div class="invalid-feedback">Please provide a rating.</div>
           <br /><br /> -->
           <label for="rating" class="form-label">Rating</label>
-          <fieldset class="starability-slot">
+          <fieldset class="starability-slot mx-auto">
             <input
               type="radio"
               id="no-rate"
@@ -190,7 +192,7 @@
           <div class="card-body w-100">
             <h6 class="card-title h5">@<%=review.author.username%></h6>
             <p
-              class="starability-result card-text"
+              class="starability-result mx-auto card-text"
               data-rating="<%=review.rating%>"
             ></p>
             <p class="card-text lead"><%=review.comment%></p>
@@ -226,7 +228,7 @@
     </div>
   </div>
   <div
-    class="col-8 mx-auto mt-3 text-center p-1 border border-dark-subtle rounded-3 border-opacity-10"
+    class="col-10 mx-auto mt-3 text-center p-1 border border-dark-subtle rounded-3 border-opacity-10"
   >
     <h6>Where You'll be Staying</h6>
     <div id="map"></div>

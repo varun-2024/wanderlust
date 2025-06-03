@@ -18,8 +18,35 @@ async function geocodeLocation(location) {
 }
 
 const Listing = require("../models/listing");
+
 module.exports.index = async (req, res) => {
   const allListings = await Listing.find({});
+  res.render("listings/index.ejs", { allListings });
+};
+
+module.exports.search = async (req, res) => {
+  const { searchQuery } = req.body;
+  console.log("Search Query:", searchQuery);
+  if (!searchQuery) {
+    req.flash("error", "Please enter a search term.");
+    return res.redirect("/listings");
+  }
+
+  const regex = new RegExp(searchQuery, "i"); // 'i' for case-insensitive
+  const allListings = await Listing.find({
+    $or: [
+      { title: regex },
+      { description: regex },
+      { location: regex },
+      { country: regex },
+    ],
+  });
+
+  if (allListings.length === 0) {
+    req.flash("error", "No listings found matching your search criteria.");
+    return res.redirect("/listings");
+  }
+
   res.render("listings/index.ejs", { allListings });
 };
 

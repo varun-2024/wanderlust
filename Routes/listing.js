@@ -46,6 +46,11 @@ router
     asyncWrap(listingController.createListings)
   );
 
+// Search Route
+router
+  .route("/search")
+  .post(saveRedirectUrl, asyncWrap(listingController.search));
+
 //Listing New Route
 router.get("/new", isLoggedIn, listingController.renderNewForm);
 
