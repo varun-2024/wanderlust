@@ -39,17 +39,6 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 100%;
 }
-/* .navrow {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  height: 100%;
-  list-style: none;
-  font-size: 1.25rem;
-  font-weight: bolder;
-  color: rgb(100, 100, 100);
-} */
 
 .container-fluid {
   display: flex;
@@ -59,17 +48,6 @@ body {
   width: 100%;
   height: 100%;
 }
-
-/* .menuclose {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  height: 100%;
-  list-style: none;
-  font-size: 1.25rem;
-  color: #ffffff;
-} */
 
 .list {
   display: flex;
@@ -85,7 +63,6 @@ body {
   color: #fe424d;
   font-size: 2.5rem;
   margin-top: 0.25rem;
-  //margin-left: 1rem;
 }
 .nav-link {
   font-size: 1.25rem !important;
@@ -153,7 +130,6 @@ body {
 }
 .card-img-top {
   width: 100%;
-  //height: auto;
   border-radius: 0.5rem;
   object-fit: cover !important;
 }
@@ -296,12 +272,12 @@ img {
 .filter p {
   margin: 0;
   font-size: 0.8rem;
-  white-space: nowrap; /* Prevent text wrapping */
+  white-space: nowrap;
 }
 
 .tax-toggle {
-  flex-shrink: 0; /* Prevent tax toggle from shrinking */
-  margin-left: auto; /* Push to the right end */
+  flex-shrink: 0;
+  margin-left: auto;
   margin-top: 1rem;
 }
 
@@ -312,15 +288,6 @@ img {
   color: #222222 !important;
 }
 
-/* .wanderlust h1 {
-  position: absolute;
-  font-size: 2rem;
-  font-weight: bold;
-  color: #fe424d !important;
-  margin-top: 0.5rem;
-  cursor: pointer;
-} */
-
 .displaycard {
   text-decoration: none;
 }
@@ -329,74 +296,12 @@ img {
   display: none;
 }
 
-/* .editwadd {
-  position: absolute;
-  font-size: 2rem;
-  font-weight: bold;
-  color: #fe424d !important;
-  margin-top: 0.5rem;
-} */
-
-/* .wanderlust-container {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.wanderlust {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} */
-
-/* .wanderlust {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} */
-
-/* .wanderlust h1 {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #fe424d !important;
-  margin-top: 0.5rem;
-  cursor: pointer;
-}
-
-.search {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: none;
-  cursor: pointer;
-}
-
-.search i {
-  font-size: 2rem;
-  color: #fe424d;
-}
-
-.hidden {
-  display: none !important;
-} */
-
 @media (max-width: 768px) {
-  /*  .navrow {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .menuclose {
-    flex-direction: column;
-    align-items: flex-start;
-  } */
   .wanderlust h1 {
     display: none;
   }
   #filters {
-    gap: 1rem; /* Smaller gap on mobile */
+    gap: 1rem;
     padding: 1rem 0.25rem;
   }
 
@@ -430,26 +335,12 @@ img {
   }
 }
 
-/* @media (max-width: 768px) {
-  .wanderlust a {
-    display: none;
-  }
-  .editw {
-    display: block !important;
-  }
-}
-@media (min-width: 769px) {
-  .editw {
-    display: none !important;
-  }
-} */
-
 .wanderlust-container {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 200px; /* Prevent container collapse */
+  min-width: 200px;
 }
 
 .wanderlust {

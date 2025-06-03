@@ -3,7 +3,7 @@
   <div class="show-container">
     <h3><%= showListing.title %></h3>
     <div
-      class="col-10 mx-auto mt-3 text-center p-1 border border-dark-subtle rounded-3 border-opacity-10"
+      class="card col-10 mx-auto mt-3 text-center p-1 border-dark-subtle rounded-3 border-opacity-10"
     >
       <div
         class="col-12 mx-auto text-center p-1 border border-dark-subtle rounded-3 border-opacity-10"
@@ -38,13 +38,6 @@
       </div>
     </div>
     <br />
-    <!-- <div class="card">
-      <h4>Title: <%= showListing.title %></h4>
-      <p>Description: <%= showListing.description %></p>
-      <p>Price: £<%= showListing.price.toLocaleString("en-GB") %></p>
-      <p>Location: <%= showListing.location %></p>
-      <p>Country: <%= showListing.country %></p>
-    </div> -->
   </div>
   <div class="button-container">
     <a href="/listings"
@@ -70,7 +63,7 @@
     id="leavereview"
   >
     <% if(currUser){%>
-    <div>
+    <div class="col-12 p-2 mx-auto mt-1 text-center">
       <h4 class="text-center">Leave a Review</h4>
       <hr />
       <br />
@@ -82,20 +75,6 @@
         id="reviewForm"
       >
         <div class="">
-          <!-- <label for="rating" class="form-label">Rating</label>
-          <br />
-          <input
-            type="range"
-            min="1"
-            max="5"
-            name="review[rating]"
-            id="rating"
-            value="3"
-            class="form-range"
-            required
-          />
-          <div class="invalid-feedback">Please provide a rating.</div>
-          <br /><br /> -->
           <label for="rating" class="form-label">Rating</label>
           <fieldset class="starability-slot mx-auto">
             <input
@@ -145,7 +124,7 @@
           </fieldset>
         </div>
 
-        <div>
+        <div class="col-12 p-2 mx-auto mt-1 text-center">
           <label for="comment" class="form-label">Comment</label>
           <br />
           <textarea
@@ -196,9 +175,6 @@
               data-rating="<%=review.rating%>"
             ></p>
             <p class="card-text lead"><%=review.comment%></p>
-            <!-- <p class="card-text">
-              <i class="fa-solid fa-star"></i><%=review.rating%></i> Stars
-            </p> -->
           </div>
           <%if(currUser && currUser._id.equals(review.author._id)){%>
           <form

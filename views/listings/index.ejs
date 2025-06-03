@@ -1,9 +1,5 @@
 <% layout("/layouts/boilerplate.ejs") %>
 <body>
-  <!-- <h3 class="h3">All Listings</h3> -->
-  <!-- <form action="/listings/new" method="GET">
-    <button>Create New Listing</button>
-  </form> -->
   <div
     class="col-12 mx-auto mt-3 text-center p-1 border border-dark-subtle rounded-3 border-opacity-10"
   >
@@ -70,7 +66,6 @@
         </div>
       </div>
     </div>
-    <!-- row row-cols-lg-3 row-cols-md-2 mt-3 row-cols-sm-1 row-cols-xs-1 -->
     <div class="listings-container">
       <div class="d-flex flex-wrap justify-content-center">
         <% for(let listings of allListings) {%>
@@ -107,12 +102,6 @@
         <% } %>
       </div>
     </div>
-
-    <!--   <ul class="list">
-    <% for(let listings of allListings) {%>
-    <li><a href="/listings/<%=listings._id%>"><%=listings.title%></a></li>
-    <% } %>
-  </ul> -->
   </div>
   <script>
     const taxswitch = document.querySelector("#taxswitchCheckDefault");
@@ -140,7 +129,6 @@
         if (activeFilter) {
           activeFilter.classList.remove("active");
         }
-
         // Add active class to current filter
         filter.classList.add("active");
         activeFilter = filter;
@@ -165,7 +153,7 @@
               card.style.display = hasMatch ? "block" : "none";
             }
           } catch (error) {
-            // Handle cases where data-categories might be malformed
+            // Handle cases where data-categories might be problematic
             console.warn("Error parsing categories for card:", card, error);
             // Show card by default if there's an error
             card.style.display = "block";

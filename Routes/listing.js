@@ -76,12 +76,3 @@ router.get(
 );
 
 module.exports = router;
-
-/* let listing = await Listing.findById(id);
-if (!listing.owner._id.equals(res.locals.currUser._id)) {
-  req.flash("error", "Permission Denied!");
-  return res.redirect(`/listings/${id}`);
-  let redirectUrl = res.locals.redirectUrl || "/listings";
-  res.redirect(redirectUrl);
-}
- */

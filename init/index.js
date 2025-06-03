@@ -24,9 +24,9 @@ const initDB = async () => {
     ...obj,
     owner: "681e851e67376585d2840d06",
   }));
-  //console.log("Data to be inserted:", initData.data); // Access the `data` property
-  const insertedData = await Listing.insertMany(initData.data); // Use `initData.data` here
-  console.log("Inserted Data:", insertedData); // Log the inserted documents
+  //console.log("Data to be inserted:", initData.data);
+  const insertedData = await Listing.insertMany(initData.data);
+  console.log("Inserted Data:", insertedData);
   console.log("Data was Inserted Successfully");
 };
 
